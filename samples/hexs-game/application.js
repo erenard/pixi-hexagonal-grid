@@ -1,6 +1,6 @@
 import 'normalize-css'
 import * as PIXI from 'pixi.js'
-import PixiHexa from 'pixi-hexa'
+import PixiHexa from 'pixi-hexagonal-grid'
 
 const orientation = PixiHexa.Orientation.POINTY_TOP
 const distance = 25

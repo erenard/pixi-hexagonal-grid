@@ -1,34 +1,37 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = function (env, argv) {
   return {
     entry: {
-      'pixi-hexagonal-grid': './src/pixi-hexa'
+      'main': './application'
     },
     output: {
-      filename: '[name].js',
+      filename: '[name].[hash].js',
       path: path.join(__dirname, 'dist')
     },
     resolve: {
       modules: [
-        'src',
+        '.',
         'node_modules'
       ]
     },
     plugins: [
-      new CleanWebpackPlugin('dist')
+      new HtmlWebpackPlugin({ template: './index.html' }),
     ],
     module: {
       rules: [
         {
           test: /\.js$/,
-          exclude: /(node_modules)/,
+          exclude: /(node_modules|bower_components)/,
           use: 'babel-loader'
         }
       ]
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    devServer: {
+      compress: false,
+      port: 9000
+    }
   }
 }
