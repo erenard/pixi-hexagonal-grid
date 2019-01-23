@@ -4,12 +4,12 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = function (env, argv) {
   return {
-    entry: {
-      'pixi-hexagonal-grid': './src/pixi-hexa'
-    },
+    entry: './src/index.js',
     output: {
-      filename: '[name].js',
-      path: path.join(__dirname, 'dist')
+      filename: 'pixi-hexagonal-grid.js',
+      path: path.join(__dirname, 'dist'),
+      library: 'pixiHexagonalGrid',
+      libraryTarget: 'umd'
     },
     resolve: {
       modules: [
@@ -17,6 +17,7 @@ module.exports = function (env, argv) {
         'node_modules'
       ]
     },
+    externals: ['pixi.js'],
     plugins: [
       new CleanWebpackPlugin('dist')
     ],

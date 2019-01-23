@@ -2,7 +2,8 @@
   "name": "pixi-hexagonal-grid",
   "version": "0.0.1",
   "description": "Hexagonal grid rendered with pixi.js",
-  "main": "src/index.js",
+  "main": "dist/pixi-hexagonal-grid.js",
+  "module": "src/index.js",
   "scripts": {
     "build": "webpack --mode production",
     "build:dev": "webpack --displayModules --mode development",
@@ -67,6 +68,6 @@
     "ngraph.path": "^1.0.3"
   },
   "peerDependencies": {
-    "pixi.js": "^4"
+    "pixi.js": "^4.8.5"
   }
 }
