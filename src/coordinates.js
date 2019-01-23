@@ -91,6 +91,27 @@ class Coordinates {
     const elements = string.split('_')
     return new Coordinates({ x: elements[0] * 1, y: elements[1] * 1, z: elements[2] * 1 })
   }
+
+  static * area (dimensions, _origin = {x: 0, y: 0, z: 0}) {
+    const origin = new Coordinates(_origin)
+    let x = 0, y, z
+    do {
+      const xOffset = origin.offset({x})
+      y = 0
+      do {
+        const yOffset = xOffset.offset({y})
+        z = 0
+        do {
+          const zOffset = yOffset.offset({z})
+          yield zOffset
+          z = z + Math.sign(dimensions.z - 0)
+        } while(z !== (dimensions.z || 0))
+        y = y + Math.sign(dimensions.y - 0)
+      } while(y !== (dimensions.y || 0))
+      x = x + Math.sign(dimensions.x - 0)
+    } while(x !== (dimensions.x || 0))
+  }
+
 }
 
 export default Coordinates

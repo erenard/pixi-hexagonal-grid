@@ -17,7 +17,7 @@ http://pixijs.download/release/docs/PIXI.TransformStatic.html
 Hexagon:
 * Needs a parent (hexagonalDisplayObject), basically (coordinate, displayObject)
 * Or need an optionnal displayObject as constructor argument
-* The private drawHexagon method needs to go to hexagon-geometry
+* The private drawHexagon method needs to go to hexagon-geometry => done
 
 Grid: (called by game)
 - hexagonByCoordinates <-- Doublon (hexagons)

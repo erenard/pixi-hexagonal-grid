@@ -82,6 +82,13 @@ class Grid {
     })
   }
 
+  fillArea(coordinatesArea, hexagonFactory) {
+    for(let coordinates of coordinatesArea) {
+      const hexagon = hexagonFactory(coordinates)
+      this.add(hexagon)
+    }
+  }
+
   /**
    * Remove an hexagon at the given coordinates.
    *

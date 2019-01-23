@@ -6,23 +6,24 @@ const orientation = PixiHexa.Orientation.POINTY_TOP
 const distance = 25
 const gridSize = { x: 10, y: 10 }
 
-const background = PixiHexa.GridUtil.createGrid(
-  { x: 10, y: 0, z: -10 },
+const background = new PixiHexa.Grid(orientation, distance)
+
+background.fillArea(
+  PixiHexa.Coordinates.area({ x: 10, y: 0, z: -10 }, {x: -5, y: -5, z: 10}),
   coordinates => {
     const hexagon = new PixiHexa.Hexagon(coordinates, {
       orientation: orientation,
       interactive: true,
       buttonMode: true,
-      fillColor: '0x777777',
-      radius: 25
+      fillColor: coordinates.toString() === '0_0_0' ? '0xaaaaaa' : '0x777777',
+      lineColor: '0x444444',
+      radius: distance
     })
     hexagon.displayObject.on('click', event => {
       play(hexagon.coordinates)
     })
     return hexagon
   })
-background.orientation = orientation
-background.distance = distance
 
 const blues = new PixiHexa.Grid(orientation, distance)
 
