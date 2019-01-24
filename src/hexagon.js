@@ -1,6 +1,7 @@
 import Coordinates from './coordinates'
 import * as PIXI from 'pixi.js'
 import { drawHexagon } from './hexagon-geometry'
+import Tile from './tile'
 
 function createDisplayObject(options) {
   if (options.texture) {
@@ -17,19 +18,14 @@ function createDisplayObject(options) {
   )
 }
 
-class Hexagon {
+class Hexagon extends Tile {
   constructor (coordinates, options = {}) {
-    this.coordinates = new Coordinates(coordinates)
+    super(coordinates)
     this.displayObject = createDisplayObject(options)
     if (options.interactive) {
       this.displayObject.interactive = true
       this.displayObject.buttonMode = true
     }
-  }
-
-  applyMatrix (matrix) {
-    this.displayObject.position = matrix.apply(this.coordinates)
-    // console.log(this.coordinates, this.displayObject.position)
   }
 }
 

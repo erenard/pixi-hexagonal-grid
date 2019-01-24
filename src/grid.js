@@ -82,10 +82,16 @@ class Grid {
     })
   }
 
-  fillArea(coordinatesArea, hexagonFactory) {
-    for(let coordinates of coordinatesArea) {
-      const hexagon = hexagonFactory(coordinates)
-      this.add(hexagon)
+  /**
+   * Proceduraly fill the grid with Tiles
+   *
+   * @param {Iterable<Coordinates>} coordinatesIterable  An iterable set of coordinates
+   * @param {Function}              tileFactory          A factory function creating a Tile form a coordinate: coordinates => Tile
+   */
+  fill (coordinatesIterable, tileFactory) {
+    for(let coordinates of coordinatesIterable) {
+      const tile = tileFactory(coordinates)
+      this.add(tile)
     }
   }
 

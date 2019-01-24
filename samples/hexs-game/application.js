@@ -8,7 +8,7 @@ const gridSize = { x: 10, y: 10 }
 
 const background = new PixiHexa.Grid(orientation, distance)
 
-background.fillArea(
+background.fill(
   PixiHexa.Coordinates.area({ x: 10, y: 0, z: -10 }, {x: -5, y: -5, z: 10}),
   coordinates => {
     const hexagon = new PixiHexa.Hexagon(coordinates, {
@@ -67,7 +67,7 @@ function play (coordinates) {
 }
 
 function showTurnIndicator () {
-  const turnIndicatorCoordinates = { x: gridSize.x - 1, y: -2 }
+  const turnIndicatorCoordinates = new PixiHexa.Coordinates({ x: gridSize.x - 1, y: -2 })
   background.remove(turnIndicatorCoordinates)
   background.add(new PixiHexa.Hexagon(turnIndicatorCoordinates, {
     orientation,
@@ -123,7 +123,7 @@ function addPathFinding (path) {
 
   function drawPolygon (points) {
     foreground.drawPolygon(
-      background.displayObject.coordinatesToPixels(points)
+      points.map(background.displayObject.coordinatesToPoint)
     )
   }
 
@@ -142,8 +142,9 @@ function initGeometryBackground (gridDisplayObject) {
 
   function drawAndFillPolygon (points, color) {
     geometryBackGround.beginFill(color)
+
     geometryBackGround.drawPolygon(
-      gridDisplayObject.coordinatesToPixels(points)
+      points.map(point => gridDisplayObject.coordinatesToPoint(point))
     )
     geometryBackGround.closePath()
     geometryBackGround.endFill()

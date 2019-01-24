@@ -118,42 +118,31 @@ class GridDisplayObject extends PIXI.Container {
       this.matrix.c = sin * this._distance // Skew Y
       this.matrix.d = cos * this._distance // Scale Y
     }
-    this.updatePositions()
+    // Updates all the childrens positions
+    Object.entries(this.displayObjectByCoordinates).forEach(entry => {
+      entry[1].position = this.coordinatesToPoint(Coordinates.fromString(entry[0]))
+    })
   }
 
   /**
-   * Update the position of the children of this container
-   */
-  updatePositions () {
-    console.log('updatePositions')
-    Object.entries(this.displayObjectByCoordinates)
-      .forEach(entry => {
-        const newPosition = this.coordinateToPixel(Coordinates.fromString(entry[0]))
-        // console.log(entry[1].position, newPosition)
-        entry[1].position = newPosition
-      })
-  }
-
-  /**
-   * Convert hexagon coordinates to a point.
+   * Convert Coordinates to a PIXI.Point.
    *
    * @param {Coordinates} coordinates - The coordinates to convert.
    * @returns {PIXI.Point} The PIXI.Point of the pixel position.
    * @memberof GridDisplayObject
    */
-  coordinateToPixel (coordinates) {
+  coordinatesToPoint (coordinates) {
     return this.matrix.apply(new Coordinates(coordinates))
   }
 
   /**
-   * Convert an array of hexagon coordinates to an array of point.
+   * Converts a PIXI.Point to Coordinates
    *
-   * @param {Array<Coordinates>} coordinates - An array of coordinates to convert.
-   * @returns {Array<PIXI.Point>} The PIXI.Points of the pixels position.
-   * @memberof GridDisplayObject
+   * @param   {PIXI.Point}  point - The point of the pixel position.
+   * @returns {Coordinates} The closest coordinates to that pixel position.
    */
-  coordinatesToPixels (coordinates) {
-    return coordinates.map(coordinate => this.coordinateToPixel(coordinate))
+  pointToCoordinates (point) {
+    throw new Error('not implemented')
   }
 }
 

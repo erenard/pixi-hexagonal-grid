@@ -2,17 +2,17 @@ import Coordinates from './coordinates'
 import Grid from './grid'
 import Hexagon from './hexagon'
 import Orientation from './orientation'
-import GridUtil from './grid-util'
+import Tile from './tile'
 
 /**
  * @namespace PixiHexa
  */
-const PixiHexa = {
+const PixiHexagonalGrid = {
   Coordinates,
   Grid,
-  GridUtil,
   Hexagon,
-  Orientation
+  Orientation,
+  Tile
 }
 
-export default PixiHexa
+export default PixiHexagonalGrid

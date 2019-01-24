@@ -75,6 +75,12 @@ class Coordinates {
     return `${this.x}_${this.y}_${this.z}`
   }
 
+  /**
+   * Returns a string representation of a coordinates or a coordinates-like object.
+   *
+   * @param      {(Coordinates|{x: Number, y: Number, z: Number}|string)}   coordinates   The coordinates to be represented.
+   * @return     {string}  String representation of the coordinates: `${x}_${y}_${z}`.
+   */
   static toString (coordinates) {
     if (typeof coordinates === 'string') {
       return coordinates
@@ -87,11 +93,35 @@ class Coordinates {
     }
   }
 
+  /**
+   * Contruct a coordinate object from a string representation.
+   *
+   * @param      {string}       string  The string representation of the following format: `${x}_${y}_${z}`
+   * @return     {Coordinates}  The coordinates object
+   */
   static fromString (string) {
     const elements = string.split('_')
     return new Coordinates({ x: elements[0] * 1, y: elements[1] * 1, z: elements[2] * 1 })
   }
 
+  /**
+   * Generates a set of coordinates covering an area, given (x, y, z) dimensions and optionnaly a coordinates of origin.
+   *
+   * Usage example:
+   * ```js
+   * // iterate over the area's set of coordinates
+   * for(let coordinates of Coordinates.area({x: 2, y: 2, z: 2})) {
+   *   // use coordinates
+   * }
+   * ```
+   *
+   * @param  {Object}  dimensions - The dimensions of the wanted area for all the axis.
+   * @param  {Number}  [dimensions.x=0] - The size of the area along the X axis.
+   * @param  {Number}  [dimensions.y=0] - The size of the area along the Y axis.
+   * @param  {Number}  [dimensions.z=0] - The size of the area along the Z axis.
+   * @param  {Coordinates} [origin={x: 0, y: 0, z: 0}] - The origin coordinate to construct the area from.
+   * @return {Coordinates} Set of coordinates covering the area.
+   */
   static * area (dimensions, _origin = {x: 0, y: 0, z: 0}) {
     const origin = new Coordinates(_origin)
     let x = 0, y, z
