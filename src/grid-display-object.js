@@ -19,13 +19,13 @@ class GridDisplayObject extends PIXI.Container {
    * @param distance
    * @memberof GridDisplayObject
    */
-  constructor (_orientation = Orientation.FLAT_TOP, _distance = 25) {
+  constructor (orientation = Orientation.FLAT_TOP, distance = 25) {
     super()
     this.displayObjectByCoordinates = {}
     this.interactive = true
     this.matrix = new PIXI.Matrix()
-    this._orientation = _orientation
-    this.distance = _distance
+    this._orientation = orientation
+    this.distance = distance
   }
 
   get orientation () {

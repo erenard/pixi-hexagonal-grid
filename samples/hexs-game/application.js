@@ -67,7 +67,7 @@ function play (coordinates) {
 }
 
 function showTurnIndicator () {
-  const turnIndicatorCoordinates = new PixiHexa.Coordinates({ x: gridSize.x - 1, y: -2 })
+  const turnIndicatorCoordinates = new PixiHexa.Coordinates({ x: 7, y: -5 })
   background.remove(turnIndicatorCoordinates)
   background.add(new PixiHexa.Hexagon(turnIndicatorCoordinates, {
     orientation,
@@ -80,13 +80,13 @@ function checkEndGame (player) {
   // 0: x axis path
   // 1: y axis path
   if (player.name === 'red') {
-    for (let y1 = 0; y1 < gridSize.y; y1++) {
-      if (player.grid.get({ x: 0, y: y1 })) {
-        for (let y2 = 0; y2 < gridSize.y; y2++) {
-          if (player.grid.get({ x: gridSize.x - 1, y: y2 })) {
+    for (let y1 = -5; y1 < 5; y1++) {
+      if (player.grid.get({ x: -5, y: y1 })) {
+        for (let y2 = -5; y2 < 5; y2++) {
+          if (player.grid.get({ x: 4, y: y2 })) {
             let path = player.grid.findPath(
-              { x: 0, y: y1 },
-              { x: gridSize.x - 1, y: y2 }
+              { x: -5, y: y1 },
+              { x: 4, y: y2 }
             )
             if (path && path.length) {
               addPathFinding(path)
@@ -97,13 +97,13 @@ function checkEndGame (player) {
       }
     }
   } else {
-    for (let x1 = 0; x1 < gridSize.x; x1++) {
-      if (player.grid.get({ x: x1, y: 0 })) {
-        for (let x2 = 0; x2 < gridSize.x; x2++) {
-          if (player.grid.get({ x: x2, y: gridSize.y - 1 })) {
+    for (let x1 = -5; x1 < 5; x1++) {
+      if (player.grid.get({ x: x1, y: -5 })) {
+        for (let x2 = -5; x2 < 5; x2++) {
+          if (player.grid.get({ x: x2, y: 4 })) {
             let path = player.grid.findPath(
-              { x: x1, y: 0 },
-              { x: x2, y: gridSize.y - 1 }
+              { x: x1, y: -5 },
+              { x: x2, y: 4 }
             )
             if (path && path.length) {
               addPathFinding(path)
@@ -123,28 +123,28 @@ function addPathFinding (path) {
 
   function drawPolygon (points) {
     foreground.drawPolygon(
-      points.map(background.displayObject.coordinatesToPoint)
+      points.map(background.coordinatesToPoint)
     )
   }
 
   drawPolygon(path.map(p => p.coordinates), 0xffaaaa)
 }
 
-function initGeometryBackground (gridDisplayObject) {
+function initGeometryBackground (grid) {
   const geometryBackGround = new PIXI.Graphics(false)
   geometryBackGround.lineStyle(1, 0xffffff, 1, 0)
 
-  const origin = { x: -1, y: -1 }
-  const extremumY = { x: -1, y: gridSize.y }
-  const extremumXY = { x: gridSize.x, y: gridSize.y }
-  const extremumX = { x: gridSize.x, y: -1 }
-  const center = { x: gridSize.x / 2, y: gridSize.y / 2 }
+  const origin = { x: -5, y: -5 }
+  const extremumY = { x: -5, y: 5 }
+  const extremumXY = { x: 5, y: 5 }
+  const extremumX = { x: 5, y: -5 }
+  const center = { x: 5 / 2, y: 5 / 2 }
 
   function drawAndFillPolygon (points, color) {
     geometryBackGround.beginFill(color)
 
     geometryBackGround.drawPolygon(
-      points.map(point => gridDisplayObject.coordinatesToPoint(point))
+      points.map(point => grid.coordinatesToPoint(point))
     )
     geometryBackGround.closePath()
     geometryBackGround.endFill()
@@ -170,7 +170,7 @@ document.body.appendChild(application.view)
 const gameBoard = new PIXI.Container()
 gameBoard.position.x = window.innerWidth / 2
 gameBoard.position.y = window.innerHeight / 2
-gameBoard.addChild(initGeometryBackground(background.displayObject))
+gameBoard.addChild(initGeometryBackground(background))
 gameBoard.addChild(background.displayObject)
 gameBoard.addChild(blues.displayObject)
 gameBoard.addChild(reds.displayObject)
