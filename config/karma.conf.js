@@ -7,11 +7,11 @@ module.exports = (config) => {
     frameworks: ['mocha', 'chai'],
 
     files: [
-      { pattern: 'test/*.test.js', watched: false }
+      { pattern: 'test/**/*.test.js', watched: false }
     ],
 
     preprocessors: {
-      'test/*.test.js': [ 'webpack' ]
+      'test/**/*.test.js': [ 'webpack' ]
     },
 
     plugins: ['karma-chrome-launcher', 'karma-webpack', 'karma-mocha', 'karma-coverage', 'karma-chai'],

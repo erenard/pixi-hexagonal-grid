@@ -1,56 +1,40 @@
-import 'normalize-css'
-import * as PIXI from 'pixi.js'
+/* global PIXI, PixiHexagonalGrid */
+const radius = 50
 
-import PixiHexa from 'pixi-hexa'
+// Create a new Grid of flat topped tiles having a 50 pixels radius.
+const grid = new PixiHexagonalGrid.Grid(PixiHexagonalGrid.Orientation.FLAT_TOP, radius)
+
+// Enumerate the coordinates of a {x: 2, y: 2, z: 2} sized area.
+const area = PixiHexagonalGrid.Coordinates.area({ x: 2, y: 2, z: 2 })
+
+// Fill the grid's area with tiles
+grid.fill(area, function (coordinates) {
+  return new PixiHexagonalGrid.Hexagon(coordinates, { radius: radius, fillColor: '0x55aa55', lineColor: '0x005555' })
+})
+
+let removedTile
+
+function removeAndAddSoon () {
+  removedTile = grid.remove({ x: 1 })
+  setTimeout(addAndRemoveSoon, 1000)
+}
+
+function addAndRemoveSoon () {
+  grid.add(removedTile)
+  setTimeout(removeAndAddSoon, 1000)
+}
+
+setTimeout(removeAndAddSoon, 1000)
 
 const application = new PIXI.Application({
   width: window.innerWidth,
   height: window.innerHeight,
-  autoResize: true,
-  resolution: devicePixelRatio
+  autoResize: true
 })
-
 document.body.appendChild(application.view)
 
-const background = PixiHexa.GridUtil.createParallelogram({ x: 5, y: 10 }, { fillColor: '0x777777' })
-const backgroundHexagonContainer = new PixiHexa.HexagonContainer(PixiHexa.Orientation.FLAT_TOP, background, { interactive: true })
-
-const blues = new PixiHexa.Grid()
-const blueHexagonContainer = new PixiHexa.HexagonContainer(PixiHexa.Orientation.FLAT_TOP, blues)
-
-const reds = new PixiHexa.Grid()
-const redHexagonContainer = new PixiHexa.HexagonContainer(PixiHexa.Orientation.FLAT_TOP, reds)
-
-backgroundHexagonContainer.on('hexagonClicked', (event, hexagon) => {
-  console.log('background hexagonContainer, hexagon clicked', event)
-  blues.add(new PixiHexa.Hexagon(hexagon.coordinates, { fillColor: '0x0000ff' }))
-})
-
 const gameBoard = new PIXI.Container()
+gameBoard.position.x = window.innerWidth / 2
+gameBoard.position.y = window.innerHeight / 2
+gameBoard.addChild(grid.displayObject)
 application.stage.addChild(gameBoard)
-gameBoard.position.x = 50
-gameBoard.position.y = 50
-
-gameBoard.addChild(backgroundHexagonContainer)
-gameBoard.addChild(blueHexagonContainer)
-gameBoard.addChild(redHexagonContainer)
-// gameBoard.addChild(interactionHexagonContainer)
-
-blues.add(new PixiHexa.Hexagon({ x: 0, y: 0, z: 0 }, { fillColor: '0x0000ff' }))
-reds.add(new PixiHexa.Hexagon({ x: 4, y: 9 }, { fillColor: '0xff0000' }))
-
-let removeds
-
-function removeSoon () {
-  removeds = background.remove({ x: 1, y: 1, z: -2 })
-  setTimeout(addSoon, 1000)
-}
-
-function addSoon () {
-  background.add(removeds[0])
-  setTimeout(removeSoon, 1000)
-}
-
-removeSoon()
-
-export default application

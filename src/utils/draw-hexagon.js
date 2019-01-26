@@ -1,7 +1,7 @@
-import Orientation from './orientation'
+import Orientation from '../orientation'
 import * as PIXI from 'pixi.js'
 
-export function drawHexagon (
+export default function drawHexagon (
   orientation = Orientation.FLAT_TOP,
   radius = 50,
   lineColor = 0xffffff,
@@ -11,7 +11,7 @@ export function drawHexagon (
   // set a fill and line style
   if (fillColor) graphics.beginFill(fillColor, 1)
   graphics.lineStyle(1, lineColor, 1, 0)
-  graphics.drawPolygon(createPolygon(orientation, radius))
+  graphics.drawPolygon(createPoints(orientation, radius))
   graphics.closePath()
   if (fillColor) graphics.endFill()
   return graphics
@@ -19,7 +19,7 @@ export function drawHexagon (
 
 const halfSquareRootOf3 = Math.sqrt(3) / 2
 
-function createPolygon (orientation, radius) {
+function createPoints (orientation, radius) {
   Orientation.check(orientation)
 
   const halfRadius = radius / 2

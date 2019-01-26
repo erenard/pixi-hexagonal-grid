@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js'
 
-import { checkAndComplete } from './coordinates-utils'
+import checkCoordinates from './utils/check-coordinates'
 import Coordinates from './coordinates'
 import Orientation from './orientation'
 import createGraph from 'ngraph.graph'
@@ -23,7 +23,6 @@ class HexagonalGrid {
   constructor (orientation = Orientation.FLAT_TOP, distance = 25) {
     this.tileByCoordinates = {}
     this.displayObject = new PIXI.Container()
-    this.displayObject.interactive = true
     this.matrix = new PIXI.Matrix()
     this._orientation = orientation
     this.distance = distance
@@ -45,9 +44,9 @@ class HexagonalGrid {
    * @param      {string}  value   The new orientation of this hexagonal grid
    */
   set orientation (value) {
-    if(value !== this._orientation && Orientation.check(value)) {
+    if (value !== this._orientation && Orientation.check(value)) {
       this._orientation = value
-      this.updateMatrix()      
+      this.updateMatrix()
     }
   }
 
@@ -67,12 +66,12 @@ class HexagonalGrid {
    */
   updateMatrix () {
     this.matrix.identity()
-    if(this._orientation === Orientation.FLAT_TOP) {
+    if (this._orientation === Orientation.FLAT_TOP) {
       // Distance between two tile centers
       this.matrix.a = cos * this._distance // Scale X
       this.matrix.b = sin * this._distance // Skew X
       this.matrix.c = 0
-      this.matrix.d = this._distance      
+      this.matrix.d = this._distance
     } else {
       // Distance between two tile centers
       this.matrix.a = this._distance
@@ -94,7 +93,7 @@ class HexagonalGrid {
    * @memberof GridDisplayObject
    */
   coordinatesToPoint (coordinates) {
-    const _coordinates = checkAndComplete(coordinates)
+    const _coordinates = checkCoordinates(coordinates)
     return this.matrix.apply(_coordinates)
   }
 
@@ -160,7 +159,7 @@ class HexagonalGrid {
    * @param {Function}              tileFactory          A factory function creating a Tile form a coordinate: coordinates => Tile
    */
   fill (coordinatesIterable, tileFactory) {
-    for(let coordinates of coordinatesIterable) {
+    for (let coordinates of coordinatesIterable) {
       const tile = tileFactory(coordinates)
       this.add(tile)
     }
@@ -209,6 +208,14 @@ class HexagonalGrid {
       console.error(err)
       return null
     }
+  }
+
+  addLink () {
+
+  }
+
+  removeLink () {
+
   }
 }
 

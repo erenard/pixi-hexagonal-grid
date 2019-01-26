@@ -1,9 +1,8 @@
-import Coordinates from './coordinates'
 import * as PIXI from 'pixi.js'
-import { drawHexagon } from './hexagon-geometry'
+import drawHexagon from './utils/draw-hexagon'
 import Tile from './tile'
 
-function createDisplayObject(options) {
+function createDisplayObject (options) {
   if (options.texture) {
     const displayObject = new PIXI.Sprite(options.texture)
     displayObject.anchor.x = 0.5
@@ -30,4 +29,3 @@ class Hexagon extends Tile {
 }
 
 export default Hexagon
-

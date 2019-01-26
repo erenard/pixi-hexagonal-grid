@@ -1,15 +1,14 @@
 import 'normalize-css'
 import * as PIXI from 'pixi.js'
-import PixiHexa from 'pixi-hexagonal-grid'
+import * as PixiHexa from 'pixi-hexagonal-grid'
 
 const orientation = PixiHexa.Orientation.POINTY_TOP
 const distance = 25
-const gridSize = { x: 10, y: 10 }
 
 const background = new PixiHexa.Grid(orientation, distance)
 
 background.fill(
-  PixiHexa.Coordinates.area({ x: 10, y: 0, z: -10 }, {x: -5, y: -5, z: 10}),
+  PixiHexa.Coordinates.area({ x: 10, y: 0, z: -10 }, { x: -5, y: -5, z: 10 }),
   coordinates => {
     const hexagon = new PixiHexa.Hexagon(coordinates, {
       orientation: orientation,

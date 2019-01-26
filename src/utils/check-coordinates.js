@@ -1,16 +1,15 @@
-function check ({ x, y, z }) {
-  const isXNumber = typeof x === 'number'
-  const isYNumber = typeof y === 'number'
-  const isZNumber = typeof z === 'number'
-  return {
-    isXNumber,
-    isYNumber,
-    isZNumber,
-    numberCount: isXNumber + isYNumber + isZNumber
-  }
-}
-
-export function checkAndComplete ({ x, y, z }) {
+/**
+ * Check the validity of an (x, y, z) tuple as hexagonal coordinates.
+ * If a given tuple is invalid (x + y + z !== 0) an error will be thrown.
+ * If the tuple is missing one or two elements, it will be completed.
+ *
+ * @param      {Object}  xyzTuple    (x, y, z) tuple
+ * @param      {Number}  xyzTuple.x  x-coordinate
+ * @param      {Number}  xyzTuple.y  y-coordinate
+ * @param      {Number}  xyzTuple.z  z-coordinate
+ * @return     {Object}  The checked or completed (x, y, z) tuple
+ */
+export default function checkAndComplete ({ x, y, z }) {
   const coordinateState = check({ x, y, z })
   if (coordinateState.numberCount === 3 && verifyCoordinates({ x, y, z })) {
     return { x, y, z }
@@ -23,8 +22,20 @@ export function checkAndComplete ({ x, y, z }) {
   }
 }
 
-function verifyCoordinates({ x, y, z }) {
-  return x + y + z === 0  
+function check ({ x, y, z }) {
+  const isXNumber = typeof x === 'number'
+  const isYNumber = typeof y === 'number'
+  const isZNumber = typeof z === 'number'
+  return {
+    isXNumber,
+    isYNumber,
+    isZNumber,
+    numberCount: isXNumber + isYNumber + isZNumber
+  }
+}
+
+function verifyCoordinates ({ x, y, z }) {
+  return x + y + z === 0
 }
 
 function completeTwoMissing ({ x, y, z }, { isXNumber, isYNumber, isZNumber }) {

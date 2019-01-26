@@ -1,0 +1,10 @@
+{
+  "plugins": [
+    "jsdoc",
+    "node",
+    "promise",
+    "standard",
+    "import"],
+  "extends": "standard"
+}
+

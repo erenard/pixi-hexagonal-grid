@@ -1,4 +1,4 @@
-import { checkAndComplete as checkCoordinates } from './coordinates-utils'
+import checkCoordinates from './utils/check-coordinates'
 
 /**
  * The x, y, z coordinates of an hexagon.
@@ -122,26 +122,25 @@ class Coordinates {
    * @param  {Coordinates} [origin={x: 0, y: 0, z: 0}] - The origin coordinate to construct the area from.
    * @return {Coordinates} Set of coordinates covering the area.
    */
-  static * area (dimensions, _origin = {x: 0, y: 0, z: 0}) {
-    const origin = new Coordinates(_origin)
-    let x = 0, y, z
+  static * area (dimensions, origin = { x: 0, y: 0, z: 0 }) {
+    const _origin = new Coordinates(origin)
+    let x = 0
     do {
-      const xOffset = origin.offset({x})
-      y = 0
+      const xOffset = _origin.offset({ x })
+      let y = 0
       do {
-        const yOffset = xOffset.offset({y})
-        z = 0
+        const yOffset = xOffset.offset({ y })
+        let z = 0
         do {
-          const zOffset = yOffset.offset({z})
+          const zOffset = yOffset.offset({ z })
           yield zOffset
           z = z + Math.sign(dimensions.z - 0)
-        } while(z !== (dimensions.z || 0))
+        } while (z !== (dimensions.z || 0))
         y = y + Math.sign(dimensions.y - 0)
-      } while(y !== (dimensions.y || 0))
+      } while (y !== (dimensions.y || 0))
       x = x + Math.sign(dimensions.x - 0)
-    } while(x !== (dimensions.x || 0))
+    } while (x !== (dimensions.x || 0))
   }
-
 }
 
 export default Coordinates

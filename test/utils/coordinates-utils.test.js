@@ -1,4 +1,6 @@
-import { checkAndComplete } from '../src/coordinates-utils'
+/* global it, describe */
+
+import checkCoordinates from '../../src/utils/check-coordinates'
 
 import { expect } from 'chai'
 
@@ -34,14 +36,14 @@ function executeTest (dataSet) {
     const input = data[0]
     const output = data[1]
     it(`${JSON.stringify(input)} => ${JSON.stringify(output)}`, () => {
-      const result = checkAndComplete(input)
+      const result = checkCoordinates(input)
       expect(result).to.deep.equal(output)
     })
   })
 }
 
-describe('coordinates-utils', () => {
-  describe('checkAndComplete', () => {
+describe('check-coordinates', () => {
+  describe('checkCoordinates', () => {
     describe('for no missing element', () => {
       executeTest(noMissingDataSet)
     })
@@ -50,6 +52,16 @@ describe('coordinates-utils', () => {
     })
     describe('for two missing elements', () => {
       executeTest(twoMissingDataSet)
+    })
+    describe('coordinate validity', () => {
+      it('should throw when invalid coordinates are passed', () => {
+        const fn = function () { checkCoordinates({ x: 1, y: 1, z: 1 }) }
+        expect(fn).to.throw('Invalid coordinates')
+      })
+      it('should not throw when valid coordinates are passed', () => {
+        const fn = function () { checkCoordinates({ x: 1, y: -1, z: 0 }) }
+        expect(fn).to.not.throw()
+      })
     })
   })
 })
