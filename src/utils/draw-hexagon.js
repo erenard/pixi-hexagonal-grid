@@ -3,8 +3,8 @@ import * as PIXI from 'pixi.js'
 
 export default function drawHexagon (
   orientation = Orientation.FLAT_TOP,
-  radius = 50,
-  lineColor = 0xffffff,
+  radius = 25,
+  lineColor = 0xaaaaaa,
   fillColor = 0x777777
 ) {
   const graphics = new PIXI.Graphics(false)
