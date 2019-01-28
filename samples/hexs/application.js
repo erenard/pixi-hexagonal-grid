@@ -8,7 +8,7 @@ const distance = 25
 const background = new PixiHexa.Grid(orientation, distance)
 
 background.fill(
-  PixiHexa.Coordinates.area({ x: 10, y: 0, z: -10 }, { x: -5, y: -5, z: 10 }),
+  PixiHexa.Coordinates.area({ x: 10, y: 1, z: 10 }, { y: 5 }),
   coordinates => {
     const hexagon = new PixiHexa.Hexagon(coordinates, {
       orientation: orientation,
@@ -130,31 +130,35 @@ function addPathFinding (path) {
 }
 
 function initGeometryBackground (grid) {
-  const geometryBackGround = new PIXI.Graphics(false)
-  geometryBackGround.lineStyle(1, 0xffffff, 1, 0)
+  const geometry = new PIXI.Graphics(false)
+  geometry.lineStyle(1, 0xffffff, 1, 0)
 
-  const origin = { x: -5, y: -5 }
-  const extremumY = { x: -5, y: 5 }
-  const extremumXY = { x: 5, y: 5 }
-  const extremumX = { x: 5, y: -5 }
-  const center = { x: 5 / 2, y: 5 / 2 }
+  const topLeft = { x: -6, y: -5, z: 11 }
+  const bottomLeft = { y: 6 }
+  const bottomRight = { x: 5, y: 6, z: -11 }
+  const topRight = { y: -5 }
+  const center = { x: 0, y: 0, z: 0 }
 
   function drawAndFillPolygon (points, color) {
-    geometryBackGround.beginFill(color)
-
-    geometryBackGround.drawPolygon(
-      points.map(point => grid.coordinatesToPoint(point))
-    )
-    geometryBackGround.closePath()
-    geometryBackGround.endFill()
+    geometry.beginFill(color)
+    const transformedPoints = points
+      .map(point => grid.coordinatesToPoint(point))
+      .reduce((acc, point) => {
+        acc.push(point.x)
+        acc.push(point.y)
+        return acc
+      }, [])
+    geometry.drawPolygon(transformedPoints)
+    geometry.closePath()
+    geometry.endFill()
   }
 
-  drawAndFillPolygon([origin, extremumY, center], players[0].color)
-  drawAndFillPolygon([center, extremumXY, extremumX], players[0].color)
-  drawAndFillPolygon([origin, center, extremumX], players[1].color)
-  drawAndFillPolygon([center, extremumY, extremumXY], players[1].color)
+  drawAndFillPolygon([topLeft, bottomLeft, center], players[0].color)
+  drawAndFillPolygon([center, bottomRight, topRight], players[0].color)
+  drawAndFillPolygon([topLeft, center, topRight], players[1].color)
+  drawAndFillPolygon([center, bottomLeft, bottomRight], players[1].color)
 
-  return geometryBackGround
+  return geometry
 }
 
 const application = new PIXI.Application({

@@ -28,3 +28,8 @@ HexagonalGrid: (called by game)
 * System d'initialisation, start an app in 3 lines of code max !
 * Split Grid into Grid + PathFinder ?
 * Différence Tile / displayobject => addTile / addChild
+* Faire marcher Uglify pour le .min.js
+* Faire marcher la win sur hexs.
+
++ Mister Jack
++ Slay
