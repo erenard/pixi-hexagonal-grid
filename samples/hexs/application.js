@@ -1,16 +1,14 @@
-import 'normalize-css'
-import * as PIXI from 'pixi.js'
-import * as PixiHexa from 'pixi-hexagonal-grid'
+/* global PIXI, PixiHexagonalGrid */
 
-const orientation = PixiHexa.Orientation.POINTY_TOP
+const orientation = PixiHexagonalGrid.Orientation.POINTY_TOP
 const distance = 25
 
-const background = new PixiHexa.Grid(orientation, distance)
+const background = new PixiHexagonalGrid.Grid(orientation, distance)
 
 background.fill(
-  PixiHexa.Coordinates.area({ x: 10, y: 1, z: 10 }, { y: 5 }),
+  PixiHexagonalGrid.Coordinates.area({ x: 10, y: 1, z: 10 }, { y: 5 }),
   coordinates => {
-    const hexagon = new PixiHexa.Hexagon(coordinates, {
+    const hexagon = new PixiHexagonalGrid.Hexagon(coordinates, {
       orientation: orientation,
       interactive: true,
       buttonMode: true,
@@ -24,9 +22,9 @@ background.fill(
     return hexagon
   })
 
-const blues = new PixiHexa.Grid(orientation, distance)
+const blues = new PixiHexagonalGrid.Grid(orientation, distance)
 
-const reds = new PixiHexa.Grid(orientation, distance)
+const reds = new PixiHexagonalGrid.Grid(orientation, distance)
 
 const players = [
   {
@@ -47,7 +45,7 @@ let isEnded = false
 function play (coordinates) {
   if (coordinates) {
     const player = players[playerTurn]
-    player.grid.add(new PixiHexa.Hexagon(coordinates, {
+    player.grid.add(new PixiHexagonalGrid.Hexagon(coordinates, {
       orientation,
       fillColor: player.color,
       radius: 25
@@ -66,9 +64,9 @@ function play (coordinates) {
 }
 
 function showTurnIndicator () {
-  const turnIndicatorCoordinates = new PixiHexa.Coordinates({ x: 7, y: -5 })
+  const turnIndicatorCoordinates = new PixiHexagonalGrid.Coordinates({ x: 7, y: -5 })
   background.remove(turnIndicatorCoordinates)
-  background.add(new PixiHexa.Hexagon(turnIndicatorCoordinates, {
+  background.add(new PixiHexagonalGrid.Hexagon(turnIndicatorCoordinates, {
     orientation,
     fillColor: players[playerTurn].color,
     radius: 25
@@ -182,5 +180,3 @@ gameBoard.addChild(foreground)
 application.stage.addChild(gameBoard)
 
 showTurnIndicator()
-
-export default application
