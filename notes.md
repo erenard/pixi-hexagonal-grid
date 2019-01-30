@@ -30,6 +30,7 @@ HexagonalGrid: (called by game)
 * Différence Tile / displayobject => addTile / addChild
 * Faire marcher Uglify pour le .min.js
 * Faire marcher la win sur hexs.
+* Rename Coordinates to CubeCoordinates
 
 + Mister Jack
 + Slay
