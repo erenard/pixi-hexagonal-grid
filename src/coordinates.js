@@ -76,32 +76,18 @@ class Coordinates {
   }
 
   /**
-   * Returns a string representation of a coordinates or a coordinates-like object.
-   *
-   * @param      {(Coordinates|{x: Number, y: Number, z: Number}|string)}   coordinates   The coordinates to be represented.
-   * @return     {string}  String representation of the coordinates: `${x}_${y}_${z}`.
-   */
-  static toString (coordinates) {
-    if (typeof coordinates === 'string') {
-      return coordinates
-    } else if (Coordinates.prototype.isPrototypeOf(coordinates)) {
-      return coordinates.toString()
-    } else if (coordinates.x && coordinates.y && coordinates.z) {
-      return `${coordinates.x}_${coordinates.y}_${coordinates.z}`
-    } else {
-      return new Coordinates(coordinates).toString()
-    }
-  }
-
-  /**
    * Contruct a coordinate object from a string representation.
    *
    * @param      {string}       string  The string representation of the following format: `${x}_${y}_${z}`
    * @return     {Coordinates}  The coordinates object
    */
-  static fromString (string) {
+  static parseCoordinates (string) {
     const elements = string.split('_')
-    return new Coordinates({ x: elements[0] * 1, y: elements[1] * 1, z: elements[2] * 1 })
+    return new Coordinates({
+      x: Number.parseInt(elements[0]),
+      y: Number.parseInt(elements[1]),
+      z: Number.parseInt(elements[2])
+    })
   }
 
   /**

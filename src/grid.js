@@ -1,7 +1,5 @@
 import * as PIXI from 'pixi.js'
 
-import checkCoordinates from './utils/check-coordinates'
-import Coordinates from './coordinates'
 import Orientation from './orientation'
 import createGraph from 'ngraph.graph'
 import path from 'ngraph.path'
@@ -93,8 +91,7 @@ class HexagonalGrid {
    * @memberof GridDisplayObject
    */
   coordinatesToPoint (coordinates) {
-    const _coordinates = checkCoordinates(coordinates)
-    return this.matrix.apply(_coordinates)
+    return this.matrix.apply(coordinates)
   }
 
   /**
@@ -125,7 +122,7 @@ class HexagonalGrid {
    * @memberof Grid
    */
   get (coordinates) {
-    const key = Coordinates.toString(coordinates)
+    const key = coordinates.toString()
     return this.tileByCoordinates[key]
   }
 
@@ -174,7 +171,7 @@ class HexagonalGrid {
    * @memberof Grid
    */
   remove (coordinates) {
-    const key = Coordinates.toString(coordinates)
+    const key = coordinates.toString()
     const tile = this.tileByCoordinates[key]
     if (tile) {
       this.displayObject.removeChild(tile.displayObject)
@@ -197,10 +194,10 @@ class HexagonalGrid {
    * @param {Coordinates} end - Ending path tile.
    */
   findPath (start, end) {
-    let pathFinder = path.aStar(this.graph)
+    const pathFinder = path.aStar(this.graph)
     try {
       return pathFinder
-        .find(Coordinates.toString(start), Coordinates.toString(end))
+        .find(start.toString(), end.toString())
         .map(node => {
           return this.tileByCoordinates[node.id]
         })
