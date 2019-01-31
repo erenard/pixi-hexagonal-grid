@@ -141,12 +141,12 @@ class HexagonalGrid {
     this.displayObject.addChild(tile.displayObject)
 
     this.graph.addNode(key)
-    tile.coordinates.neighbourgs.forEach(link => {
+    for (let link of tile.coordinates.neighbourgs()) {
       const linkKey = link.toString()
       if (this.tileByCoordinates[linkKey]) {
         this.graph.addLink(key, linkKey)
       }
-    })
+    }
   }
 
   /**
@@ -177,12 +177,12 @@ class HexagonalGrid {
       this.displayObject.removeChild(tile.displayObject)
       delete this.tileByCoordinates[key]
       this.graph.removeNode(key)
-      tile.coordinates.neighbourgs.forEach(link => {
+      for (let link of tile.coordinates.neighbourgs()) {
         const linkKey = link.toString()
         if (this.tileByCoordinates[linkKey]) {
           this.graph.removeLink(key, linkKey)
         }
-      })
+      }
     }
     return tile
   }

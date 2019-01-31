@@ -1,7 +1,7 @@
 import checkCoordinates from './utils/check-coordinates'
 
 /**
- * The x, y, z coordinates of an hexagon.
+ * The cude coordinates (x, y, z) of an hexagon.
  *
  * @class Coordinates
  */
@@ -23,19 +23,25 @@ class Coordinates {
   /**
    * Check the equality of this coordinates with an other coordinates.
    *
-   * @param {Coordinates} other - The other coordinates to compare.
-   * @returns {boolean} The equality of this and other.
+   * @param  {Coordinates}  other    The other cube coordinate.
+   * @param  {Number}  other.x  x part of the other coordinates.
+   * @param  {Number}  other.y  y part of the other coordinates.
+   * @param  {Number}  other.z  z part of the other coordinates.
+   * @return {Boolean}  Equality between this and other.
    * @memberof Coordinates
    */
-  equals (other) {
-    return this.x === other.x && this.y === other.y && this.z === other.z
+  equals ({ x, y, z }) {
+    return this.x === x && this.y === y && this.z === z
   }
 
   /**
-   * Get a new instance of coordinates with a translation.
+   * Get a new instance of coordinates with an offset.
    *
-   * @param {*} Any - Translation { x, y, z }.
-   * @returns New instance of coordinates.
+   * @param  {Coordinates}  offset The offset to apply to this cube coordinate.
+   * @param  {Number}  offset.x  x part of the offset coordinates.
+   * @param  {Number}  offset.y  y part of the offset coordinates.
+   * @param  {Number}  offset.z  z part of the offset coordinates.
+   * @returns New offseted instance of coordinates.
    * @memberof Coordinates
    */
   offset ({ x, y, z }) {
@@ -48,25 +54,23 @@ class Coordinates {
   }
 
   /**
-   * Get neighbourgs of this coordinates.
+   * Generate a set of the 6 neighbouring Coordinates.
    *
-   * @readonly
+   * @return     {Coordinates} Each neighbourg Coordinates.
    * @memberof Coordinates
    */
-  get neighbourgs () {
-    const returned = [
-      this.offset({ x: 1 }),
-      this.offset({ y: 1 }),
-      this.offset({ z: 1 }),
-      this.offset({ x: -1 }),
-      this.offset({ y: -1 }),
-      this.offset({ z: -1 })
-    ]
-    return returned
+  * neighbourgs () {
+    yield this.offset({ x: 1 })
+    yield this.offset({ y: 1 })
+    yield this.offset({ z: 1 })
+    yield this.offset({ x: -1 })
+    yield this.offset({ y: -1 })
+    yield this.offset({ z: -1 })
   }
 
   /**
-   * Used as a storage key for the hexagon HexagonContainer.
+   * Gives a string representation of this Coordinates, using the following format: `${x}_${y}_${z}`.
+   * Used as a storage key for the tiles of a Grid.
    *
    * @returns {string} Representation of the coordinates.
    * @memberof Coordinates
@@ -76,7 +80,8 @@ class Coordinates {
   }
 
   /**
-   * Contruct a coordinate object from a string representation.
+   * Contruct a coordinate object from its string representation.
+   * @see toString()
    *
    * @param      {string}       string  The string representation of the following format: `${x}_${y}_${z}`
    * @return     {Coordinates}  The coordinates object
