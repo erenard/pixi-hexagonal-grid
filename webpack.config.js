@@ -5,8 +5,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = function (env, argv) {
   return {
     entry: {
-      'pixi-hexagonal-grid': './src/index.js',
-      'pixi-hexagonal-grid.min': './src/index.js'
+      'pixi-hexagonal-grid': './src/index.js'
+      // 'pixi-hexagonal-grid.min': './src/index.js'
     },
     output: {
       filename: '[name].js',
