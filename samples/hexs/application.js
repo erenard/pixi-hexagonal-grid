@@ -46,8 +46,11 @@ function play (coordinates) {
   if (coordinates) {
     const player = players[playerTurn]
     player.grid.add(new PixiHexagonalGrid.Hexagon(coordinates, {
+      interactive: true,
+      buttonMode: false,
       orientation,
       fillColor: player.color,
+      lineColor: '0x444444',
       radius: 25
     }))
     isEnded = checkEndGame(player)
