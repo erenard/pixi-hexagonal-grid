@@ -29,8 +29,8 @@ HexagonalGrid: (called by game)
 * Split Grid into Grid + PathFinder ?
 * Différence Tile / displayobject => addTile / addChild
 * Faire marcher Uglify pour le .min.js
-* Faire marcher la win sur hexs.
 * Rename Coordinates to CubeCoordinates
+* Mettre le centre au centre
 
 + Mister Jack
 + Slay

@@ -12,12 +12,14 @@ background.fill(
       orientation: orientation,
       interactive: true,
       buttonMode: true,
-      fillColor: coordinates.toString() === '0_0_0' ? '0xaaaaaa' : '0x777777',
+      fillColor: '0x777777', // coordinates.toString() === '0_0_0' ? '0xaaaaaa' : '0x777777',
       lineColor: '0x444444',
       radius: distance
     })
     hexagon.displayObject.on('click', event => {
-      play(hexagon.coordinates)
+      if (!winPath) {
+        play(hexagon.coordinates)
+      }
     })
     return hexagon
   })
@@ -40,11 +42,12 @@ const players = [
 ]
 
 var playerTurn = 0
-let isEnded = false
+let winPath = false
 
 function play (coordinates) {
   if (coordinates) {
     const player = players[playerTurn]
+    console.log(player.name + ' plays @' + coordinates)
     player.grid.add(new PixiHexagonalGrid.Hexagon(coordinates, {
       interactive: true,
       buttonMode: false,
@@ -53,21 +56,20 @@ function play (coordinates) {
       lineColor: '0x444444',
       radius: 25
     }))
-    isEnded = checkEndGame(player)
+    winPath = findVictoryPath(player)
   }
 
-  if (isEnded) {
-    console.log('game finished')
-    return playerTurn
+  if (winPath) {
+    addPathFinding(winPath)
+  } else {
+    playerTurn++
+    playerTurn %= 2
+    showTurnIndicator()
   }
-
-  playerTurn++
-  playerTurn %= 2
-  showTurnIndicator()
 }
 
 function showTurnIndicator () {
-  const turnIndicatorCoordinates = new PixiHexagonalGrid.Coordinates({ x: 7, y: -5 })
+  const turnIndicatorCoordinates = new PixiHexagonalGrid.Coordinates({ x: 7, z: 4 })
   background.remove(turnIndicatorCoordinates)
   background.add(new PixiHexagonalGrid.Hexagon(turnIndicatorCoordinates, {
     orientation,
@@ -76,38 +78,40 @@ function showTurnIndicator () {
   }))
 }
 
-function checkEndGame (player) {
+function findVictoryPath (player) {
   // 0: x axis path
   // 1: y axis path
   if (player.name === 'red') {
-    for (let y1 = -5; y1 < 5; y1++) {
-      if (player.grid.get({ x: -5, y: y1 })) {
-        for (let y2 = -5; y2 < 5; y2++) {
-          if (player.grid.get({ x: 4, y: y2 })) {
+    for (let zStart = -5; zStart < 5; zStart++) {
+      let startCoordinates = new PixiHexagonalGrid.Coordinates({ x: -5, z: zStart })
+      if (player.grid.get(startCoordinates)) {
+        for (let zEnd = -5; zEnd < 5; zEnd++) {
+          let endCoordinates = new PixiHexagonalGrid.Coordinates({ x: 4, z: zEnd })
+          if (player.grid.get(endCoordinates)) {
             let path = player.grid.findPath(
-              { x: -5, y: y1 },
-              { x: 4, y: y2 }
+              startCoordinates,
+              endCoordinates
             )
             if (path && path.length) {
-              addPathFinding(path)
-              return true
+              return path
             }
           }
         }
       }
     }
   } else {
-    for (let x1 = -5; x1 < 5; x1++) {
-      if (player.grid.get({ x: x1, y: -5 })) {
-        for (let x2 = -5; x2 < 5; x2++) {
-          if (player.grid.get({ x: x2, y: 4 })) {
+    for (let xStart = -5; xStart < 5; xStart++) {
+      let startCoordinates = new PixiHexagonalGrid.Coordinates({ x: xStart, z: -5 })
+      if (player.grid.get(startCoordinates)) {
+        for (let xEnd = -5; xEnd < 5; xEnd++) {
+          let endCoordinates = new PixiHexagonalGrid.Coordinates({ x: xEnd, z: 4 })
+          if (player.grid.get(endCoordinates)) {
             let path = player.grid.findPath(
-              { x: x1, y: -5 },
-              { x: x2, y: 4 }
+              startCoordinates,
+              endCoordinates
             )
             if (path && path.length) {
-              addPathFinding(path)
-              return true
+              return path
             }
           }
         }
@@ -117,16 +121,15 @@ function checkEndGame (player) {
   return false
 }
 
-const foreground = new PIXI.Graphics(false)
-function addPathFinding (path) {
-  foreground.lineStyle(1, 0xffffff, 1, 0)
+const victoryPathGraphics = new PIXI.Graphics(false)
 
+function addPathFinding (path) {
+  victoryPathGraphics.lineStyle(1, 0xffffff, 1, 0)
   function drawPolygon (points) {
-    foreground.drawPolygon(
-      points.map(background.coordinatesToPoint)
+    victoryPathGraphics.drawPolygon(
+      points.map(point => background.coordinatesToPoint(point))
     )
   }
-
   drawPolygon(path.map(p => p.coordinates), 0xffaaaa)
 }
 
@@ -134,11 +137,11 @@ function initGeometryBackground (grid) {
   const geometry = new PIXI.Graphics(false)
   geometry.lineStyle(1, 0xffffff, 1, 0)
 
-  const topLeft = { x: -6, y: -5, z: 11 }
-  const bottomLeft = { y: 6 }
-  const bottomRight = { x: 5, y: 6, z: -11 }
-  const topRight = { y: -5 }
-  const center = { x: 0, y: 0, z: 0 }
+  const topLeft = new PixiHexagonalGrid.Coordinates({ x: -6, y: -5, z: 11 })
+  const bottomLeft = new PixiHexagonalGrid.Coordinates({ y: 6 })
+  const bottomRight = new PixiHexagonalGrid.Coordinates({ x: 5, y: 6, z: -11 })
+  const topRight = new PixiHexagonalGrid.Coordinates({ y: -5 })
+  const center = new PixiHexagonalGrid.Coordinates({ x: 0, y: 0, z: 0 })
 
   function drawAndFillPolygon (points, color) {
     geometry.beginFill(color)
@@ -178,7 +181,7 @@ gameBoard.addChild(initGeometryBackground(background))
 gameBoard.addChild(background.displayObject)
 gameBoard.addChild(blues.displayObject)
 gameBoard.addChild(reds.displayObject)
-gameBoard.addChild(foreground)
+gameBoard.addChild(victoryPathGraphics)
 
 application.stage.addChild(gameBoard)
 
