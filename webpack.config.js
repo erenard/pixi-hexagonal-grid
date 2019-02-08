@@ -35,8 +35,8 @@ module.exports = function (env, argv) {
               presets: [[
                 'babel-preset-env',
                 {
-                  'targets': '> 0.25%, not dead',
-                  'useBuiltIns': 'entry'
+                  // https://github.com/babel/babel-preset-env#targetsuglify
+                  'targets': 'uglify'
                 }
               ]]
             }
