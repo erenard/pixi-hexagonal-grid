@@ -5,8 +5,8 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 module.exports = function (env, argv) {
   return {
     entry: {
-      'pixi-hexagonal-grid': './src/index.js'
-      // 'pixi-hexagonal-grid.min': './src/index.js'
+      'pixi-hexagonal-grid': './src/index.js',
+      'pixi-hexagonal-grid.min': './src/index.js'
     },
     output: {
       filename: '[name].js',
@@ -29,15 +29,28 @@ module.exports = function (env, argv) {
         {
           test: /\.js$/,
           exclude: /(node_modules)/,
-          use: 'babel-loader'
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: [[
+                'babel-preset-env',
+                {
+                  'targets': '> 0.25%, not dead',
+                  'useBuiltIns': 'entry'
+                }
+              ]]
+            }
+          }
         }
       ]
     },
     devtool: 'source-map',
     optimization: {
-      minimize: false,
       minimizer: [
-        new UglifyJsPlugin()
+        new UglifyJsPlugin({
+          test: /.*\.min.*/,
+          sourceMap: true
+        })
       ]
     }
   }
