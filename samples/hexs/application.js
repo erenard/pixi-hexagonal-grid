@@ -6,7 +6,7 @@ const distance = 25
 const background = new PixiHexagonalGrid.Grid(orientation, distance)
 
 background.fill(
-  PixiHexagonalGrid.Coordinates.area({ x: 10, y: 1, z: 10 }, { y: 5 }),
+  PixiHexagonalGrid.CubeCoordinates.area({ x: 10, y: 1, z: 10 }, { y: 5 }),
   coordinates => {
     const hexagon = new PixiHexagonalGrid.Hexagon(coordinates, {
       orientation: orientation,
@@ -69,7 +69,7 @@ function play (coordinates) {
 }
 
 function showTurnIndicator () {
-  const turnIndicatorCoordinates = new PixiHexagonalGrid.Coordinates({ x: 7, z: 4 })
+  const turnIndicatorCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: 7, z: 4 })
   background.remove(turnIndicatorCoordinates)
   background.add(new PixiHexagonalGrid.Hexagon(turnIndicatorCoordinates, {
     orientation,
@@ -83,10 +83,10 @@ function findVictoryPath (player) {
   // 1: y axis path
   if (player.name === 'red') {
     for (let zStart = -5; zStart < 5; zStart++) {
-      let startCoordinates = new PixiHexagonalGrid.Coordinates({ x: -5, z: zStart })
+      let startCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: -5, z: zStart })
       if (player.grid.get(startCoordinates)) {
         for (let zEnd = -5; zEnd < 5; zEnd++) {
-          let endCoordinates = new PixiHexagonalGrid.Coordinates({ x: 4, z: zEnd })
+          let endCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: 4, z: zEnd })
           if (player.grid.get(endCoordinates)) {
             let path = player.grid.findPath(
               startCoordinates,
@@ -101,10 +101,10 @@ function findVictoryPath (player) {
     }
   } else {
     for (let xStart = -5; xStart < 5; xStart++) {
-      let startCoordinates = new PixiHexagonalGrid.Coordinates({ x: xStart, z: -5 })
+      let startCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: xStart, z: -5 })
       if (player.grid.get(startCoordinates)) {
         for (let xEnd = -5; xEnd < 5; xEnd++) {
-          let endCoordinates = new PixiHexagonalGrid.Coordinates({ x: xEnd, z: 4 })
+          let endCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: xEnd, z: 4 })
           if (player.grid.get(endCoordinates)) {
             let path = player.grid.findPath(
               startCoordinates,
@@ -137,11 +137,11 @@ function initGeometryBackground (grid) {
   const geometry = new PIXI.Graphics(false)
   geometry.lineStyle(1, 0xffffff, 1, 0)
 
-  const topLeft = new PixiHexagonalGrid.Coordinates({ x: -6, y: -5, z: 11 })
-  const bottomLeft = new PixiHexagonalGrid.Coordinates({ y: 6 })
-  const bottomRight = new PixiHexagonalGrid.Coordinates({ x: 5, y: 6, z: -11 })
-  const topRight = new PixiHexagonalGrid.Coordinates({ y: -5 })
-  const center = new PixiHexagonalGrid.Coordinates({ x: 0, y: 0, z: 0 })
+  const topLeft = new PixiHexagonalGrid.CubeCoordinates({ x: -6, y: -5, z: 11 })
+  const bottomLeft = new PixiHexagonalGrid.CubeCoordinates({ y: 6 })
+  const bottomRight = new PixiHexagonalGrid.CubeCoordinates({ x: 5, y: 6, z: -11 })
+  const topRight = new PixiHexagonalGrid.CubeCoordinates({ y: -5 })
+  const center = new PixiHexagonalGrid.CubeCoordinates({ x: 0, y: 0, z: 0 })
 
   function drawAndFillPolygon (points, color) {
     geometry.beginFill(color)

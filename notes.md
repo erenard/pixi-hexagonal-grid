@@ -25,11 +25,10 @@ HexagonalGrid: (called by game)
 + matrix for the coordinates system
 + transform coordinates to pixel positions
 
-* System d'initialisation, start an app in 3 lines of code max !
 * Split Grid into Grid + PathFinder ?
+* System d'initialisation, start an app in 3 lines of code max !
 * Différence Tile / displayobject => addTile / addChild
-* Faire marcher Uglify pour le .min.js
-* Rename Coordinates to CubeCoordinates
+* Séparer les build ES5 et 6+ ?
 * Mettre le centre au centre
 
 + Mister Jack

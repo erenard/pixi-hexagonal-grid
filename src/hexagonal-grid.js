@@ -84,9 +84,9 @@ class HexagonalGrid {
   }
 
   /**
-   * Convert Coordinates to a PIXI.Point.
+   * Convert CubeCoordinates to a PIXI.Point.
    *
-   * @param {Coordinates} coordinates - The coordinates to convert.
+   * @param {CubeCoordinates} coordinates - The coordinates to convert.
    * @returns {PIXI.Point} The PIXI.Point of the pixel position.
    * @memberof GridDisplayObject
    */
@@ -95,10 +95,10 @@ class HexagonalGrid {
   }
 
   /**
-   * Converts a PIXI.Point to Coordinates
+   * Converts a PIXI.Point to CubeCoordinates
    *
    * @param   {PIXI.Point}  point - The point of the pixel position.
-   * @returns {Coordinates} The closest coordinates to that pixel position.
+   * @returns {CubeCoordinates} The closest coordinates to that pixel position.
    */
   pointToCoordinates (point) {
     throw new Error('not implemented')
@@ -117,7 +117,7 @@ class HexagonalGrid {
   /**
    * Get the tile at the given coordinates.
    *
-   * @param {Coordinates} coordinates - The coordinates.
+   * @param {CubeCoordinates} coordinates - The coordinates.
    * @returns {number} The tile.
    * @memberof Grid
    */
@@ -152,7 +152,7 @@ class HexagonalGrid {
   /**
    * Proceduraly fill the grid with Tiles
    *
-   * @param {Iterable<Coordinates>} coordinatesIterable  An iterable set of coordinates
+   * @param {Iterable<CubeCoordinates>} coordinatesIterable  An iterable set of coordinates
    * @param {Function}              tileFactory          A factory function creating a Tile form a coordinate: coordinates => Tile
    */
   fill (coordinatesIterable, tileFactory) {
@@ -166,7 +166,7 @@ class HexagonalGrid {
    * Remove an tile at the given coordinates.
    *
    * @function
-   * @param {Coordinates} coordinates - The location of the removed tile.
+   * @param {CubeCoordinates} coordinates - The location of the removed tile.
    * @returns {Tile} The removed tile.
    * @memberof Grid
    */
@@ -190,8 +190,8 @@ class HexagonalGrid {
   /**
    * Find a path between two tiles.
    *
-   * @param {Coordinates} start - Starting path tile.
-   * @param {Coordinates} end - Ending path tile.
+   * @param {CubeCoordinates} start - Starting path tile.
+   * @param {CubeCoordinates} end - Ending path tile.
    */
   findPath (start, end) {
     const pathFinder = path.aStar(this.graph)

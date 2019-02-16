@@ -20,7 +20,11 @@ module.exports = function (env, argv) {
         'node_modules'
       ]
     },
-    externals: { 'pixi.js': 'PIXI' },
+    externals: {
+      'pixi.js': 'PIXI',
+      'ngraph.graph': 'ngraphGraph',
+      'ngraph.path': 'ngraphPath'
+    },
     plugins: [
       new CleanWebpackPlugin('dist')
     ],
