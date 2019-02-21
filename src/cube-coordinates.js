@@ -4,14 +4,16 @@ import checkCoordinates from './utils/check-coordinates'
  * The cude coordinates (x, y, z) of an hexagon.
  *
  * @class CubeCoordinates
- * @typedef CubeCoordinates
  */
 class CubeCoordinates {
   /**
    * Creates an instance of CubeCoordinates.
    * Will check and complete the coordinates if one of them is missing.
    *
-   * @param {*} Any - Object having two of these properties x, y, z.
+   * @param  {Object|CubeCoordinates} coordinate Complete or partial cube coordinates.
+   * @param  {Number}  coordinate.x  x part of the coordinates.
+   * @param  {Number}  coordinate.y  y part of the coordinates.
+   * @param  {Number}  coordinate.z  z part of the coordinates.
    * @memberof CubeCoordinates
    */
   constructor ({ x, y, z }) {
@@ -24,7 +26,7 @@ class CubeCoordinates {
   /**
    * Check the equality of this coordinates with an other coordinates.
    *
-   * @param  {CubeCoordinates}  other    The other cube coordinate.
+   * @param  {Object|CubeCoordinates}  other The other cube coordinate.
    * @param  {Number}  other.x  x part of the other coordinates.
    * @param  {Number}  other.y  y part of the other coordinates.
    * @param  {Number}  other.z  z part of the other coordinates.
@@ -36,13 +38,13 @@ class CubeCoordinates {
   }
 
   /**
-   * Get a new instance of coordinates with an offset.
+   * Add an offset to this cube coordinates.
    *
-   * @param  {CubeCoordinates}  offset The offset to apply to this cube coordinate.
+   * @param  {Object|CubeCoordinates}  offset The offset to apply to this cube coordinate.
    * @param  {Number}  offset.x  x part of the offset coordinates.
    * @param  {Number}  offset.y  y part of the offset coordinates.
    * @param  {Number}  offset.z  z part of the offset coordinates.
-   * @returns New offseted instance of coordinates.
+   * @returns New offseted instance of cube coordinates.
    * @memberof CubeCoordinates
    */
   offset ({ x, y, z }) {
@@ -56,8 +58,11 @@ class CubeCoordinates {
 
   /**
    * Generate a set of the 6 neighbouring CubeCoordinates.
-   *
-   * @return     {CubeCoordinates} Each neighbourg CubeCoordinates.
+   * @example
+   * for (let neighbourg in cc.neighbourgs()) {
+   *   // use neighbourg
+   * }
+   * @yields   {CubeCoordinates} Neighbourg cube coordinates.
    * @memberof CubeCoordinates
    */
   * neighbourgs () {

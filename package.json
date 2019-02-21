@@ -9,7 +9,7 @@
     "start": "webpack --watch --mode development",
     "lint": "eslint --cache --ext .vue,.js src",
     "lint:fix": "eslint --cache --fix --ext .vue,.js src",
-    "jsdoc": "jsdoc src -c jsdoc.json",
+    "docs": "jsdoc src -c jsdoc.json",
     "test": "karma start config/karma.conf.js",
     "coverage": "karma start config/karma.coverage.conf.js"
   },
@@ -22,7 +22,16 @@
     "hexagon",
     "grid"
   ],
-  "author": "Eric Renard",
+  "author": {
+    "name": "Eric Renard",
+    "email": "timmy469@gmail.com",
+    "url": "https://github.com/erenard"
+  },
+  "contributors": [
+    {
+      "name": "Julien Croain"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.0",

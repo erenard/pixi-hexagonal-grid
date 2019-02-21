@@ -16,7 +16,8 @@ class HexagonalGrid {
   /**
    * Creates an instance of HexagonalGrid.
    *
-   * @memberof HexagonalGrid
+   * @param      {String} [orientation=Orientation.FLAT_TOP] - The orientation of the hexagons of the grid.
+   * @param      {Number} [distance=25] - The distance between two hexagons.
    */
   constructor (orientation = Orientation.FLAT_TOP, distance = 25) {
     this.tileByCoordinates = {}
@@ -28,19 +29,13 @@ class HexagonalGrid {
   }
 
   /**
-   * Get the orientation
-   *
-   * @return     {string}  The current orientation of this hexagonal grid.
+   * The tile's orientation.
+   * @type {String}
    */
   get orientation () {
     return this._orientation
   }
 
-  /**
-   * Set the orientation
-   *
-   * @param      {string}  value   The new orientation of this hexagonal grid
-   */
   set orientation (value) {
     if (value !== this._orientation && Orientation.check(value)) {
       this._orientation = value
@@ -48,6 +43,10 @@ class HexagonalGrid {
     }
   }
 
+  /**
+   * The distance between two tiles.
+   * @type {Number}
+   */
   get distance () {
     return this._distance / (2 * cos)
   }
@@ -59,8 +58,6 @@ class HexagonalGrid {
 
   /**
    * Update the transformation matrix used to position the tiles.
-   *
-   * @memberof HexagonalGrid
    */
   updateMatrix () {
     this.matrix.identity()
@@ -84,11 +81,10 @@ class HexagonalGrid {
   }
 
   /**
-   * Convert CubeCoordinates to a PIXI.Point.
+   * Convert CubeCoordinates to a PIXI.Point
    *
    * @param {CubeCoordinates} coordinates - The coordinates to convert.
    * @returns {PIXI.Point} The PIXI.Point of the pixel position.
-   * @memberof GridDisplayObject
    */
   coordinatesToPoint (coordinates) {
     return this.matrix.apply(coordinates)
@@ -105,10 +101,10 @@ class HexagonalGrid {
   }
 
   /**
-   * Array of all the tiles in this grid.
+   * All the tiles in this grid.
    *
    * @readonly
-   * @memberof Grid
+   * @type {Tile[]}
    */
   get tiles () {
     return Object.values(this.tileByCoordinates)
@@ -119,7 +115,6 @@ class HexagonalGrid {
    *
    * @param {CubeCoordinates} coordinates - The coordinates.
    * @returns {number} The tile.
-   * @memberof Grid
    */
   get (coordinates) {
     const key = coordinates.toString()
@@ -130,7 +125,6 @@ class HexagonalGrid {
    * Add an tile to the grid.
    *
    * @param {Tile} tile - The tile to add.
-   * @memberof Grid
    */
   add (tile) {
     const key = tile.coordinates.toString()
@@ -168,7 +162,6 @@ class HexagonalGrid {
    * @function
    * @param {CubeCoordinates} coordinates - The location of the removed tile.
    * @returns {Tile} The removed tile.
-   * @memberof Grid
    */
   remove (coordinates) {
     const key = coordinates.toString()
@@ -208,11 +201,11 @@ class HexagonalGrid {
   }
 
   addLink () {
-
+    throw new Error('not implemented')
   }
 
   removeLink () {
-
+    throw new Error('not implemented')
   }
 }
 

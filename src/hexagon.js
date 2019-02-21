@@ -17,7 +17,24 @@ function createDisplayObject (options) {
   )
 }
 
+/**
+ * Hexagon representation
+ *
+ * @class Hexagon
+ */
 class Hexagon extends Tile {
+  /**
+   * Constructs the object.
+   *
+   * @param {Object|CubeCoordinates} coordinates         The coordinates
+   * @param {Object}                 options             The options
+   * @param {Boolean}                options.interactive Set to true if the hexagon can catch mouse events.
+   * @param {PIXI.Texture}           options.texture     Set texture if you need a sprite instead of an hexagon.
+   * @param {Orientation}            options.orientation Pointy or flatty topped hexagon. (ignored if texture is used)
+   * @param {Number}                 options.radius      radius of the hexagon to draw. (ignored if texture is used)
+   * @param {String}                 options.lineColor   Color of the line to draw, formatted like `0xff5544`. (ignored if texture is used)
+   * @param {String}                 options.fillColor   Color of the hexagon to draw, formatted like `0xff5544`. (ignored if texture is used)
+   */
   constructor (coordinates, options = {}) {
     super(coordinates)
     this.displayObject = createDisplayObject(options)
