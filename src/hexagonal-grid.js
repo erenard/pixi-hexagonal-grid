@@ -25,7 +25,6 @@ class HexagonalGrid {
     this._orientation = orientation
     this.distance = distance
     this.pathFinding = new PathFinding()
-    // this.graph = createGraph()
   }
 
   /**
@@ -111,9 +110,19 @@ class HexagonalGrid {
   }
 
   /**
+   * The path finding object.
+   *
+   * @readonly
+   * @type {PathFinding}
+   */
+  get pathFinding () {
+    return this.pathFinding
+  }
+
+  /**
    * Get the tile at the given coordinates.
    *
-   * @param {CubeCoordinates} coordinates - The coordinates.
+   * @param {CubeCoordinates|String} coordinates - The coordinates or its string representation. @see CubeCoordinates.toString()
    * @returns {number} The tile.
    */
   get (coordinates) {
@@ -166,26 +175,6 @@ class HexagonalGrid {
       this.pathFinding.removeNode(coordinates)
     }
     return tile
-  }
-
-  /**
-   * Find a path between two tiles.
-   *
-   * @param {CubeCoordinates} start - Starting path tile.
-   * @param {CubeCoordinates} end - Ending path tile.
-   */
-  findPath (start, end) {
-    // TODO replace this method by a bulk tile from nodeid,
-    // And call directly the pathfinding then the bulk update.
-    try {
-      return this.pathFinding.findPath(start, end)
-        .map(node => {
-          return this.tileByCoordinates[node.id]
-        })
-    } catch (err) {
-      console.error(err)
-      return null
-    }
   }
 }
 
