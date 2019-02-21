@@ -1,8 +1,7 @@
 import * as PIXI from 'pixi.js'
 
 import Orientation from './orientation'
-import createGraph from 'ngraph.graph'
-import path from 'ngraph.path'
+import PathFinding from './path-finding'
 
 const cos = Math.cos(Math.PI / 6)
 const sin = Math.sin(Math.PI / 6)
@@ -25,7 +24,8 @@ class HexagonalGrid {
     this.matrix = new PIXI.Matrix()
     this._orientation = orientation
     this.distance = distance
-    this.graph = createGraph()
+    this.pathFinding = new PathFinding()
+    // this.graph = createGraph()
   }
 
   /**
@@ -134,13 +134,7 @@ class HexagonalGrid {
 
     this.displayObject.addChild(tile.displayObject)
 
-    this.graph.addNode(key)
-    for (let link of tile.coordinates.neighbourgs()) {
-      const linkKey = link.toString()
-      if (this.tileByCoordinates[linkKey]) {
-        this.graph.addLink(key, linkKey)
-      }
-    }
+    this.pathFinding.addNode(tile.coordinates)
   }
 
   /**
@@ -169,13 +163,7 @@ class HexagonalGrid {
     if (tile) {
       this.displayObject.removeChild(tile.displayObject)
       delete this.tileByCoordinates[key]
-      this.graph.removeNode(key)
-      for (let link of tile.coordinates.neighbourgs()) {
-        const linkKey = link.toString()
-        if (this.tileByCoordinates[linkKey]) {
-          this.graph.removeLink(key, linkKey)
-        }
-      }
+      this.pathFinding.removeNode(coordinates)
     }
     return tile
   }
@@ -187,10 +175,10 @@ class HexagonalGrid {
    * @param {CubeCoordinates} end - Ending path tile.
    */
   findPath (start, end) {
-    const pathFinder = path.aStar(this.graph)
+    // TODO replace this method by a bulk tile from nodeid,
+    // And call directly the pathfinding then the bulk update.
     try {
-      return pathFinder
-        .find(start.toString(), end.toString())
+      return this.pathFinding.findPath(start, end)
         .map(node => {
           return this.tileByCoordinates[node.id]
         })
@@ -198,14 +186,6 @@ class HexagonalGrid {
       console.error(err)
       return null
     }
-  }
-
-  addLink () {
-    throw new Error('not implemented')
-  }
-
-  removeLink () {
-    throw new Error('not implemented')
   }
 }
 
