@@ -25,7 +25,6 @@ HexagonalGrid: (called by game)
 + matrix for the coordinates system
 + transform coordinates to pixel positions
 
-* Split Grid into Grid + PathFinder ?
 * System d'initialisation, start an app in 3 lines of code max !
 * Différence Tile / displayobject => addTile / addChild
 * Séparer les build ES5 et 6+ ?

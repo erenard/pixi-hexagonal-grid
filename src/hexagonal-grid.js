@@ -24,7 +24,7 @@ class HexagonalGrid {
     this.matrix = new PIXI.Matrix()
     this._orientation = orientation
     this.distance = distance
-    this.pathFinding = new PathFinding()
+    this._pathFinding = new PathFinding()
   }
 
   /**
@@ -116,7 +116,7 @@ class HexagonalGrid {
    * @type {PathFinding}
    */
   get pathFinding () {
-    return this.pathFinding
+    return this._pathFinding
   }
 
   /**
@@ -143,7 +143,7 @@ class HexagonalGrid {
 
     this.displayObject.addChild(tile.displayObject)
 
-    this.pathFinding.addNode(tile.coordinates)
+    this._pathFinding.addNode(tile.coordinates)
   }
 
   /**
@@ -172,7 +172,7 @@ class HexagonalGrid {
     if (tile) {
       this.displayObject.removeChild(tile.displayObject)
       delete this.tileByCoordinates[key]
-      this.pathFinding.removeNode(coordinates)
+      this._pathFinding.removeNode(coordinates)
     }
     return tile
   }

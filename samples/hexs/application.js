@@ -88,7 +88,7 @@ function findVictoryPath (player) {
         for (let zEnd = -5; zEnd < 5; zEnd++) {
           let endCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: 4, z: zEnd })
           if (player.grid.get(endCoordinates)) {
-            let path = player.grid.findPath(
+            let path = player.grid.pathFinding.findPath(
               startCoordinates,
               endCoordinates
             )
@@ -106,7 +106,7 @@ function findVictoryPath (player) {
         for (let xEnd = -5; xEnd < 5; xEnd++) {
           let endCoordinates = new PixiHexagonalGrid.CubeCoordinates({ x: xEnd, z: 4 })
           if (player.grid.get(endCoordinates)) {
-            let path = player.grid.findPath(
+            let path = player.grid.pathFinding.findPath(
               startCoordinates,
               endCoordinates
             )
@@ -130,7 +130,7 @@ function addPathFinding (path) {
       points.map(point => background.coordinatesToPoint(point))
     )
   }
-  drawPolygon(path.map(p => p.coordinates), 0xffaaaa)
+  drawPolygon(path.map(p => background.get(p).coordinates), 0xffaaaa)
 }
 
 function initGeometryBackground (grid) {
