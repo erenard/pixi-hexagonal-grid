@@ -176,6 +176,20 @@ class HexagonalGrid {
     }
     return tile
   }
+
+  /**
+   * Find the path between two tiles
+   *
+   * @param      {Tile|CubeCoordinates|String}  startTile  The start tile
+   * @param      {Tile|CubeCoordinates|String}  endTile    The end tile
+   * @return     {Array<Tile>}  The tile sequence representing the found path
+   */
+  findPath (startTile, endTile) {
+    const start = startTile.coordinates ? startTile.coordinates : startTile
+    const end = endTile.coordinates ? endTile.coordinates : endTile
+    const path = this.pathFinding.findPath(start, end)
+    return path ? path.map(key => this.get(key)) : null
+  }
 }
 
 export default HexagonalGrid

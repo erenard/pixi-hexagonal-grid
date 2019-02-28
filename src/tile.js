@@ -33,6 +33,10 @@ class Tile {
       this.displayObject.position = matrix.apply(this.coordinates)
     }
   }
+
+  toString () {
+    return `Tile{${this.coordinates}}`
+  }
 }
 
 export default Tile

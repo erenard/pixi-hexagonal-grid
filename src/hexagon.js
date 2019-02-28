@@ -43,6 +43,10 @@ class Hexagon extends Tile {
       this.displayObject.buttonMode = true
     }
   }
+
+  toString () {
+    return `Hexagon{${this.coordinates}}`
+  }
 }
 
 export default Hexagon
