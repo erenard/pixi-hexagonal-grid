@@ -6,7 +6,7 @@ const distance = 25
 const background = new PixiHexagonalGrid.Grid(orientation, distance)
 
 background.fill(
-  PixiHexagonalGrid.CubeCoordinates.area({ x: 10, y: 1, z: 10 }, { y: 5 }),
+  PixiHexagonalGrid.CubeCoordinates.selectArea({ x: 10, y: 1, z: 10 }, { y: 5 }),
   coordinates => {
     const hexagon = new PixiHexagonalGrid.Hexagon(coordinates, {
       orientation: orientation,

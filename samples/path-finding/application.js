@@ -1,13 +1,23 @@
 /* global PIXI, PixiHexagonalGrid */
+var texture = PIXI.Texture.fromImage('examples/assets/bunny.png')
 
 function createBoard (size = 5) {
   // Enumerate the coordinates of an hexagonal area, each side measuring 'size'.
-  const area = PixiHexagonalGrid.CubeCoordinates.area({ x: size, y: size, z: size })
+  const area = PixiHexagonalGrid.CubeCoordinates.selectArea({ x: size, y: size, z: size })
   // Create a new Grid of flat topped tiles having a 50 pixels radius.
   const grid = new PixiHexagonalGrid.Grid(PixiHexagonalGrid.Orientation.FLAT_TOP)
   // Fill the grid's area with tiles
   grid.fill(area, function (coordinates) {
-    return new PixiHexagonalGrid.Hexagon(coordinates)
+    const hexagon = new PixiHexagonalGrid.Hexagon(coordinates, {
+      interactive: true,
+      texture: texture,
+      fillColor: 0xaaaaaa,
+      radius: 25
+    })
+    hexagon.displayObject.on('click', function (event) {
+      handleTileClick(hexagon, event)
+    })
+    return hexagon
   })
   return grid
 }
@@ -51,6 +61,13 @@ PathFindingSample.prototype.start = function () {
   this.path = this.board.findPath(this.startTile, this.endTile)
   const pathGraphics = createPathGraphics(this.board, this.path)
   this.container.addChild(pathGraphics)
+}
+
+function handleTileClick (hexagon, event) {
+  console.log(hexagon.toString(), event)
+  // Change color
+  hexagon.setDisplayObject()
+  // Toggle path
 }
 
 const pathFindingSample = new PathFindingSample()

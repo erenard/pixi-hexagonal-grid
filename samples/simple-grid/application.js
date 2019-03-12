@@ -5,7 +5,7 @@ const radius = 50
 const grid = new PixiHexagonalGrid.Grid(PixiHexagonalGrid.Orientation.FLAT_TOP, radius)
 
 // Enumerate the coordinates of a {x: 2, y: 2, z: 2} sized area.
-const area = PixiHexagonalGrid.CubeCoordinates.area({ x: 2, y: 2, z: 2 })
+const area = PixiHexagonalGrid.CubeCoordinates.selectArea({ x: 2, y: 2, z: 2 })
 
 // Fill the grid's area with tiles
 grid.fill(area, function (coordinates) {

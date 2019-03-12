@@ -14,7 +14,7 @@ module.exports = (config) => {
       'test/**/*.test.js': [ 'webpack' ]
     },
 
-    plugins: ['karma-chrome-launcher', 'karma-webpack', 'karma-mocha', 'karma-coverage', 'karma-chai'],
+    plugins: ['karma-chrome-launcher', 'karma-webpack', 'karma-mocha', 'karma-chai'],
 
     webpack: {
       module: {
@@ -23,10 +23,7 @@ module.exports = (config) => {
             test: /\.js$/,
             exclude: /node_modules/,
             use: {
-              loader: 'babel-loader',
-              options: {
-                'plugins': [ 'istanbul' ]
-              }
+              loader: 'babel-loader'
             }
           }
         ]
@@ -37,11 +34,6 @@ module.exports = (config) => {
       stats: 'errors-only'
     },
 
-    reporters: ['progress', 'coverage'],
-
-    coverageReporter: {
-      reporters: [{ type: 'lcov' }, { type: 'text' }],
-      subdir: '.'
-    }
+    reporters: ['progress']
   })
 }

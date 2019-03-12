@@ -5,7 +5,7 @@ const size = 10
 const grid = new PixiHexagonalGrid.Grid(PixiHexagonalGrid.Orientation.FLAT_TOP)
 
 // Enumerate the coordinates of an hexagonal area, each side measuring 'size'.
-const area = PixiHexagonalGrid.CubeCoordinates.area({ x: size, y: size, z: size })
+const area = PixiHexagonalGrid.CubeCoordinates.selectArea({ x: size, y: size, z: size })
 
 function decimalToHexString (number) {
   if (number < 0) {

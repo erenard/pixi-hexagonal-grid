@@ -1,4 +1,5 @@
 import checkCoordinates from './utils/check-coordinates'
+import selectArea from './utils/select-area'
 
 /**
  * The cude coordinates (x, y, z) of an hexagon.
@@ -107,7 +108,7 @@ class CubeCoordinates {
    * Usage example:
    * ```js
    * // iterate over the area's set of coordinates
-   * for(let coordinates of CubeCoordinates.area({x: 2, y: 2, z: 2})) {
+   * for(let coordinates of CubeCoordinates.selectArea({x: 2, y: 2, z: 2})) {
    *   // use coordinates
    * }
    * ```
@@ -119,24 +120,8 @@ class CubeCoordinates {
    * @param  {CubeCoordinates} [origin={x: 0, y: 0, z: 0}] - The origin coordinate to construct the area from.
    * @return {CubeCoordinates} Set of coordinates covering the area.
    */
-  static * area (dimensions, origin = { x: 0, y: 0, z: 0 }) {
-    const _origin = new CubeCoordinates(origin)
-    let x = 0
-    do {
-      const xOffset = _origin.offset({ x })
-      let y = 0
-      do {
-        const yOffset = xOffset.offset({ y })
-        let z = 0
-        do {
-          const zOffset = yOffset.offset({ z })
-          yield zOffset
-          z = z + Math.sign(dimensions.z - 0)
-        } while (z !== (dimensions.z || 0))
-        y = y + Math.sign(dimensions.y - 0)
-      } while (y !== (dimensions.y || 0))
-      x = x + Math.sign(dimensions.x - 0)
-    } while (x !== (dimensions.x || 0))
+  static * selectArea (dimensions, origin = { x: 0, y: 0, z: 0 }) {
+    return selectArea(dimensions, origin)
   }
 }
 
