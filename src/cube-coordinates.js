@@ -120,7 +120,7 @@ class CubeCoordinates {
    * @param  {CubeCoordinates} [origin={x: 0, y: 0, z: 0}] - The origin coordinate to construct the area from.
    * @return {CubeCoordinates} Set of coordinates covering the area.
    */
-  static * selectArea (dimensions, origin = { x: 0, y: 0, z: 0 }) {
+  static selectArea (dimensions, origin = { x: 0, y: 0, z: 0 }) {
     return selectArea(dimensions, origin)
   }
 }
