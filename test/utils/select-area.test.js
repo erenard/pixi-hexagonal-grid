@@ -6,7 +6,7 @@ import { expect } from 'chai'
 
 function executeTest (testCase) {
   it('for a ' + testCase.name, () => {
-    const iterator = selectArea(testCase.area)
+    const iterator = selectArea(testCase.area, testCase.origin)
     expect(iterator).to.not.equal(null)
     let index = 0
     for (let coordinate of iterator) {
@@ -18,6 +18,12 @@ function executeTest (testCase) {
 }
 
 describe('select-area', () => {
+  executeTest({
+    name: 'empty area',
+    area: { x: 0, y: 0, z: 0 },
+    expecteds: []
+  })
+
   executeTest({
     name: '1,1,1 area',
     area: { x: 1, y: 1, z: 1 },
@@ -42,5 +48,20 @@ describe('select-area', () => {
       '1_-1_0'
     ],
     area: { x: 2, y: 2, z: 2 }
+  })
+
+  executeTest({
+    name: '2,2,2 area, y=5 origin', // translate: -5 5 0
+    expecteds: [
+      '-5_5_0',
+      '-6_6_0',
+      '-4_5_-1',
+      '-5_6_-1',
+      '-5_4_1',
+      '-6_5_1',
+      '-4_4_0'
+    ],
+    area: { x: 2, y: 2, z: 2 },
+    origin: { x: 0, y: 5, z: 0 }
   })
 })

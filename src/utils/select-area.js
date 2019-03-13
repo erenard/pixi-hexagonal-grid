@@ -26,19 +26,19 @@ export default function selectArea (
   const coordinates = new Map()
   for (let x = 0; x < dimensions.x; x++) {
     for (let y = 0; y < dimensions.y; y++) {
-      const coordinate = new CubeCoordinates({ x, y })
+      const coordinate = new CubeCoordinates({ x, y }).offset(origin)
       coordinates.set(coordinate.toString(), coordinate)
     }
   }
   for (let y = 0; y < dimensions.y; y++) {
     for (let z = 0; z < dimensions.z; z++) {
-      const coordinate = new CubeCoordinates({ y, z })
+      const coordinate = new CubeCoordinates({ y, z }).offset(origin)
       coordinates.set(coordinate.toString(), coordinate)
     }
   }
   for (let z = 0; z < dimensions.z; z++) {
     for (let x = 0; x < dimensions.x; x++) {
-      const coordinate = new CubeCoordinates({ x, z })
+      const coordinate = new CubeCoordinates({ x, z }).offset(origin)
       coordinates.set(coordinate.toString(), coordinate)
     }
   }
