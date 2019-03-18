@@ -141,7 +141,8 @@ class HexagonalGrid {
 
     tile.applyMatrix(this.matrix)
 
-    this.displayObject.addChild(tile.displayObject)
+    // console.log(`Adding ${tile.toString()} to this grid.`)
+    this.displayObject.addChild(tile)
 
     this._pathFinding.addNode(tile.coordinates)
   }

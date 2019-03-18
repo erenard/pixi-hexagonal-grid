@@ -4,7 +4,7 @@ const POINTY_TOP = 'POINTY_TOP'
 export default {
   check (o) {
     if (o !== FLAT_TOP && o !== POINTY_TOP) {
-      throw new Error(`Invalid orientation: ${o}`)
+      throw new Error(`Invalid orientation: ${o.toString()}`)
     }
   },
   FLAT_TOP,

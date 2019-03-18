@@ -4,9 +4,8 @@ import Tile from './tile'
 
 function createDisplayObject (options) {
   if (options.texture) {
-    const displayObject = new PIXI.Sprite(options.texture)
-    displayObject.anchor.x = 0.5
-    displayObject.anchor.y = 0.5
+    const displayObject = PIXI.Sprite.from(options.texture)
+    displayObject.anchor.set(0.5)
     return displayObject
   }
   return drawHexagon(
@@ -17,8 +16,18 @@ function createDisplayObject (options) {
   )
 }
 
+function createDisplayMask (orientation, radius) {
+  return drawHexagon(
+    orientation,
+    radius,
+    0xffffff,
+    0xffffff
+  )
+}
+
 /**
  * Hexagon representation
+ * TODO Allways use a texture, instead of a graphics
  *
  * @class Hexagon
  */
@@ -29,11 +38,11 @@ class Hexagon extends Tile {
    * @param {Object|CubeCoordinates} coordinates         The coordinates
    * @param {Object}                 options             The options
    * @param {Boolean}                options.interactive Set to true if the hexagon can catch mouse events.
-   * @param {PIXI.Texture}           options.texture     Set texture if you need a sprite instead of an hexagon.
-   * @param {Orientation}            options.orientation Pointy or flatty topped hexagon. (ignored if texture is used)
-   * @param {Number}                 options.radius      radius of the hexagon to draw. (ignored if texture is used)
-   * @param {String}                 options.lineColor   Color of the line to draw, formatted like `0xff5544`. (ignored if texture is used)
-   * @param {String}                 options.fillColor   Color of the hexagon to draw, formatted like `0xff5544`. (ignored if texture is used)
+   * @param {PIXI.Texture}           options.texutre     Set texture if you need a sprite instead of an hexagon.
+   * @param {Orientation}            options.orientation Pointy or flatty topped hexagon.
+   * @param {Number}                 options.radius      radius of the hexagon to draw.
+   * @param {String}                 options.lineColor   Color of the line to draw, formatted like `0xff5544`. (ignored if sprite is used)
+   * @param {String}                 options.fillColor   Color of the hexagon to draw, formatted like `0xff5544`. (ignored if sprite is used)
    */
   constructor (coordinates, options = {}) {
     super(coordinates)
@@ -42,6 +51,10 @@ class Hexagon extends Tile {
       this.displayObject.interactive = true
       this.displayObject.buttonMode = true
     }
+    this.addChild(this.displayObject)
+    this.mask = createDisplayMask(options.orientation, options.radius)
+    this.addChild(this.mask)
+    this.displayObject.mask = this.mask
   }
 
   toString () {
