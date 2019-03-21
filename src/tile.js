@@ -1,4 +1,5 @@
 import CubeCoordinates from './cube-coordinates'
+
 import * as PIXI from 'pixi.js'
 
 /**
@@ -28,6 +29,19 @@ class Tile extends PIXI.Container {
    */
   applyMatrix (matrix) {
     this.position = matrix.apply(this.coordinates)
+  }
+
+  set mask (value) {
+    if (this._mask) this.removeChild(this._mask)
+    if (this.displayObject && value) {
+      this._mask = value
+      this.addChild(value)
+      this.displayObject.mask = value
+    }
+  }
+
+  get mask () {
+    return this._mask
   }
 
   toString () {

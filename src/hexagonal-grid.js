@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js'
 
 import Orientation from './orientation'
 import PathFinding from './path-finding'
+import drawHexagon from './utils/draw-hexagon'
 
 const cos = Math.cos(Math.PI / 6)
 const sin = Math.sin(Math.PI / 6)
@@ -39,6 +40,7 @@ class HexagonalGrid {
     if (value !== this._orientation && Orientation.check(value)) {
       this._orientation = value
       this.updateMatrix()
+      this.updateTiles()
     }
   }
 
@@ -51,8 +53,20 @@ class HexagonalGrid {
   }
 
   set distance (value) {
-    this._distance = value * (2 * cos)
-    this.updateMatrix()
+    if ((value * (2 * cos)) !== this._distance) {
+      this._distance = value * (2 * cos)
+      this.updateMatrix()
+      this.updateTiles()
+    }
+  }
+
+  /**
+   * Updates all the tiles positions and texture mask.
+   */
+  updateTiles () {
+    this.tiles.forEach(tile => {
+      this.updateTile(tile)
+    })
   }
 
   /**
@@ -73,10 +87,20 @@ class HexagonalGrid {
       this.matrix.c = sin * this._distance // Skew Y
       this.matrix.d = cos * this._distance // Scale Y
     }
-    // Updates all the childrens positions
-    this.tiles.forEach(tile => {
-      tile.applyMatrix(this.matrix)
-    })
+  }
+
+  /**
+   * Update the texture mask used for rendering the tiles.
+   */
+  get mask () {
+    const graphics = drawHexagon(
+      this.orientation,
+      this.distance,
+      0xffffff,
+      0xffffff
+    )
+    graphics.cacheAsBitmap = true
+    return graphics
   }
 
   /**
@@ -139,7 +163,7 @@ class HexagonalGrid {
     const key = tile.coordinates.toString()
     this.tileByCoordinates[key] = tile
 
-    tile.applyMatrix(this.matrix)
+    this.updateTile(tile)
 
     // console.log(`Adding ${tile.toString()} to this grid.`)
     this.displayObject.addChild(tile)
@@ -147,6 +171,10 @@ class HexagonalGrid {
     this._pathFinding.addNode(tile.coordinates)
   }
 
+  updateTile (tile) {
+    tile.applyMatrix(this.matrix)
+    tile.mask = this.mask
+  }
   /**
    * Proceduraly fill the grid with Tiles
    *
