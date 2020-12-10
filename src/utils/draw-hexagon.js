@@ -25,7 +25,7 @@ function createPoints (orientation, radius) {
   const halfRadius = radius / 2
   const halfSquareRootOf3Radius = halfSquareRootOf3 * radius
 
-  var points = []
+  const points = []
   if (Orientation.FLAT_TOP === orientation) {
     // first point at right
     points.push(radius, 0)

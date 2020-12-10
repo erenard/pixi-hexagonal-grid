@@ -11,7 +11,7 @@ class PathFinding {
     this.graph.beginUpdate()
     this.graph.addNode(key, nodeData)
     if (addLinks) {
-      for (let neighbourg of coordinates.neighbourgs()) {
+      for (const neighbourg of coordinates.neighbourgs()) {
         const neighbourgKey = neighbourg.toString()
         if (this.graph.getNode(neighbourgKey)) {
           this.addLink(key, neighbourgKey, linkData)

@@ -53,7 +53,7 @@ class HexagonalGrid {
   }
 
   set distance (value) {
-    if ((value * (2 * cos)) !== this._distance) {
+    if (value * (2 * cos) !== this._distance) {
       this._distance = value * (2 * cos)
       this.updateMatrix()
       this.updateTiles()
@@ -175,6 +175,7 @@ class HexagonalGrid {
     tile.applyMatrix(this.matrix)
     tile.mask = this.mask
   }
+
   /**
    * Proceduraly fill the grid with Tiles
    *
@@ -182,7 +183,7 @@ class HexagonalGrid {
    * @param {Function}              tileFactory          A factory function creating a Tile form a coordinate: coordinates => Tile
    */
   fill (coordinatesIterable, tileFactory) {
-    for (let coordinates of coordinatesIterable) {
+    for (const coordinates of coordinatesIterable) {
       const tile = tileFactory(coordinates)
       this.add(tile)
     }
