@@ -2,8 +2,6 @@
 
 import checkCoordinates from '../../src/utils/check-coordinates'
 
-import { expect } from 'chai'
-
 const noMissingDataSet = [
   [{ x: 1, y: 0, z: -1 }, { x: 1, y: 0, z: -1 }],
   [{ x: -1, y: 0, z: 1 }, { x: -1, y: 0, z: 1 }],
@@ -61,7 +59,7 @@ function executeTest (dataSet) {
     const output = data[1]
     it(`${JSON.stringify(input)} => ${JSON.stringify(output)}`, () => {
       const result = checkCoordinates(input)
-      expect(result).to.deep.equal(output)
+      expect(result).toStrictEqual(output)
     })
   })
 }

@@ -1,6 +1,6 @@
 const path = require('path')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = function (env, argv) {
   return {
@@ -26,7 +26,7 @@ module.exports = function (env, argv) {
       'ngraph.path': 'ngraphPath'
     },
     plugins: [
-      new CleanWebpackPlugin('dist')
+      new CleanWebpackPlugin()
     ],
     module: {
       rules: [
@@ -35,27 +35,16 @@ module.exports = function (env, argv) {
           exclude: /(node_modules)/,
           use: {
             loader: 'babel-loader',
-            options: {
-              presets: [[
-                'babel-preset-env',
-                {
-                  // https://github.com/babel/babel-preset-env#targetsuglify
-                  'targets': 'uglify'
-                }
-              ]]
-            }
           }
         }
       ]
     },
     devtool: 'source-map',
     optimization: {
-      minimizer: [
-        new UglifyJsPlugin({
-          test: /.*\.min.*/,
-          sourceMap: true
-        })
-      ]
+      minimize: true,
+      minimizer: [new TerserPlugin({
+        test: /\.js(\?.*)?$/i
+      })],
     }
   }
 }

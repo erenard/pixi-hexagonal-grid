@@ -1,17 +1,14 @@
-/* global it, describe */
 import CubeCoordinates from '../../src/cube-coordinates'
 import selectArea from '../../src/utils/select-area'
-
-import { expect } from 'chai'
 
 function executeTest (testCase) {
   it('for a ' + testCase.name, () => {
     const iterator = selectArea(testCase.area, testCase.origin)
-    expect(iterator).to.not.equal(null)
+    expect(iterator).not.toEqual(null)
     let index = 0
     for (let coordinate of iterator) {
       const expected = CubeCoordinates.parseCoordinates(testCase.expecteds[index])
-      expect(coordinate.toString()).to.equal(expected.toString())
+      expect(coordinate.toString()).toEqual(expected.toString())
       index++
     }
   })
