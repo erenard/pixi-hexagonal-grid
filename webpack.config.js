@@ -1,6 +1,6 @@
 const path = require('path')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = function (env, argv) {
   return {
@@ -21,9 +21,7 @@ module.exports = function (env, argv) {
       ]
     },
     externals: {
-      'pixi.js': 'PIXI',
-      'ngraph.graph': 'ngraphGraph',
-      'ngraph.path': 'ngraphPath'
+      'pixi.js': 'PIXI'
     },
     plugins: [
       new CleanWebpackPlugin()
@@ -34,7 +32,7 @@ module.exports = function (env, argv) {
           test: /\.js$/,
           exclude: /(node_modules)/,
           use: {
-            loader: 'babel-loader',
+            loader: 'babel-loader'
           }
         }
       ]
@@ -44,7 +42,7 @@ module.exports = function (env, argv) {
       minimize: true,
       minimizer: [new TerserPlugin({
         test: /\.js(\?.*)?$/i
-      })],
+      })]
     }
   }
 }
