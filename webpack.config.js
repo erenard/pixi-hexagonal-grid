@@ -1,8 +1,7 @@
-const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+import path from 'path'
+import { CleanWebpackPlugin } from 'clean-webpack-plugin'
 
-module.exports = function (env, argv) {
+export default function (env, argv) {
   return {
     entry: {
       'pixi-hexagonal-grid': './src/index.js',
@@ -10,7 +9,7 @@ module.exports = function (env, argv) {
     },
     output: {
       filename: '[name].js',
-      path: path.join(__dirname, 'dist'),
+      path: path.join('/home/eric/Sources/pixi-hexagonal-grid', 'dist'),
       library: 'PixiHexagonalGrid',
       libraryTarget: 'umd'
     },
@@ -26,23 +25,6 @@ module.exports = function (env, argv) {
     plugins: [
       new CleanWebpackPlugin()
     ],
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /(node_modules)/,
-          use: {
-            loader: 'babel-loader'
-          }
-        }
-      ]
-    },
     devtool: 'source-map',
-    optimization: {
-      minimize: true,
-      minimizer: [new TerserPlugin({
-        test: /\.js(\?.*)?$/i
-      })]
-    }
   }
 }

@@ -1,4 +1,4 @@
-import CubeCoordinates from '../cube-coordinates'
+import CubeCoordinates from '../cube-coordinates.js'
 
 /**
  * Generates a set of coordinates covering an area, given (x, y, z) dimensions and optionnaly a coordinates of origin.

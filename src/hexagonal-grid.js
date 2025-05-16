@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js'
 
-import Orientation from './orientation'
-import PathFinding from './path-finding'
-import drawHexagon from './utils/draw-hexagon'
+import Orientation from 'orientation.js'
+import PathFinding from 'path-finding.js'
+import drawHexagon from 'utils/draw-hexagon.js'
 
 const cos = Math.cos(Math.PI / 6)
 const sin = Math.sin(Math.PI / 6)

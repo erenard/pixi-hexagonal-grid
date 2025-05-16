@@ -1,8 +1,8 @@
-import CubeCoordinates from './cube-coordinates'
-import Grid from './hexagonal-grid'
-import Hexagon from './hexagon'
-import Orientation from './orientation'
-import Tile from './tile'
+import CubeCoordinates from 'cube-coordinates.js'
+import Grid from 'hexagonal-grid.js'
+import Hexagon from 'hexagon.js'
+import Orientation from 'orientation.js'
+import Tile from 'tile.js'
 
 export {
   CubeCoordinates,

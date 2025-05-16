@@ -1,4 +1,4 @@
-import CubeCoordinates from './cube-coordinates'
+import CubeCoordinates from 'cube-coordinates.js'
 
 import * as PIXI from 'pixi.js'
 

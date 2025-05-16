@@ -1,5 +1,5 @@
-import checkCoordinates from './utils/check-coordinates'
-import selectArea from './utils/select-area'
+import checkCoordinates from 'utils/check-coordinates.js'
+import selectArea from 'utils/select-area.js'
 
 /**
  * The cude coordinates (x, y, z) of an hexagon.

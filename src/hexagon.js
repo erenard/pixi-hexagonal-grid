@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js'
-import drawHexagon from './utils/draw-hexagon'
-import Tile from './tile'
-import Orientation from './orientation'
+import drawHexagon from 'utils/draw-hexagon.js'
+import Tile from 'tile.js'
+import Orientation from 'orientation.js'
 
 /**
  * Hexagon representation

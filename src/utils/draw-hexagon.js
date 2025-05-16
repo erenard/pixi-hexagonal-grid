@@ -1,4 +1,4 @@
-import Orientation from '../orientation'
+import Orientation from '../orientation.js'
 import * as PIXI from 'pixi.js'
 
 export default function drawHexagon (

@@ -45,7 +45,7 @@ class PathFinding {
   /**
    * Find a path between two tiles.
    *
-   * @param {CubeCoordinates|String} start - Starting cube coordinates or its string representation @see CubeCoordinates.toString().
+   * @param {CubeCoordinates|String} starti - Starting cube coordinates or its string representation @see CubeCoordinates.toString().
    * @param {CubeCoordinates|String} end - Ending cube coordinates or its string representation @see CubeCoordinates.toString().
    * @returns {String[]} - An array of the CubeCoordinates string representation.
    * @usage
